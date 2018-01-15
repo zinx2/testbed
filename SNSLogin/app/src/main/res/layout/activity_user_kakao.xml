@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<com.kakao.usermgmt.LoginButton-->
+        <!--android:id="@+id/com_kakao_login"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_margin="20dp"/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/btnFacebook"-->
+
+
+
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/btnKakaoDisconnectApp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/btnKakaoDisconnectApp"
+        android:textColor="#ffffff"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/btnKakaoLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        android:text="카카오 로그인"
+        android:textColor="#ffffff"
+        app:layout_constraintTop_toBottomOf="@+id/btnKakaoDisconnectApp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/btnKakaoLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/btnKakaoLogout"
+        android:textColor="#ffffff"
+        app:layout_constraintTop_toBottomOf="@+id/btnKakaoLogin"
+        tools:layout_editor_absoluteX="0dp" />
+
+
+
+</android.support.constraint.ConstraintLayout>

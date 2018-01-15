@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>font/NanumBarunGothic_android.ttf</file>
+        <file>font/NanumBarunGothic_ios.ttf</file>
+    </qresource>
+</RCC>
