@@ -54,7 +54,7 @@ Rectangle {
                 }
 
                 /* NOT DESIGN LOGIC */
-                cmd.loginSNS();
+                cmd.loginKakao();
             }
         }
 

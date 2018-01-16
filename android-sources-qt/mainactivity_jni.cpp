@@ -4,13 +4,14 @@
 
 void Java_ac_olei_testbed_MainActivity_resume(JNIEnv *env, jobject obj)
 {
-  Q_UNUSED(env)
-  Q_UNUSED(obj)
+    Q_UNUSED(env)
+    Q_UNUSED(obj)
 
-  if(native){
-    NativeApp* app = native;
-    app->resume();
-  }
+    NativeApp* app = NativeApp::getInstance();
+    if(app){
+        app = NativeApp::getInstance();
+        app->resume();
+    }
 }
 
 void Java_ac_olei_testbed_MainActivity_pause(JNIEnv *env, jobject obj)
@@ -18,12 +19,24 @@ void Java_ac_olei_testbed_MainActivity_pause(JNIEnv *env, jobject obj)
     Q_UNUSED(env)
     Q_UNUSED(obj)
 
-    if(native){
-      NativeApp* app = native;
-      app->pause();
+    NativeApp* app = NativeApp::getInstance();
+    if(app){
+        app = NativeApp::getInstance();
+        app->pause();
     }
 }
 
+void Java_ac_olei_testbed_MainActivity_loginFinished(JNIEnv *env, jobject obj, jboolean isSuccess)
+{
+    Q_UNUSED(env)
+    Q_UNUSED(obj)
+
+    NativeApp* app = NativeApp::getInstance();
+    if(app){
+        app = NativeApp::getInstance();
+        app->notifyLoginResult(isSuccess);
+    }
+}
 
 //void Java_org_koreatech_trizcartoon_MainActivity_backPressed(JNIEnv *env, jobject obj)
 //{

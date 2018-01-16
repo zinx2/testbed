@@ -81,6 +81,10 @@ import android.widget.TextView;
 
 public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
 {
+    private native void resume();
+    private native void pause();
+    private native void loginFinished(boolean isSuccess);
+
 //    public static final String TAG = "MainActivity";
 //    private static final String GCM_PROJECT_ID_KEY = "org.koreatech.trizcontradiction.GcmProjectId";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -132,8 +136,7 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
         super.onPause();
     }
 
-    private native void resume();
-    private native void pause();
+
 
     public String getDeviceId()
     {
@@ -249,5 +252,10 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
 
     }
 
+    public void loginKakao()
+    {
+        Log.d("LOG MESSAGE", "LOGGINED KAKAO");
+        loginFinished(true);
+    }
 
 }

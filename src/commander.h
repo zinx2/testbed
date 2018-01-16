@@ -17,7 +17,11 @@ public:
 
 public slots:
     void joinSNS();
-    void loginSNS();
+    void loginKakao();
+
+    void onLoginSuccess();
+    void onLoginFailed();
+
 private:
     Commander(QObject *parent = NULL);
     ~Commander();

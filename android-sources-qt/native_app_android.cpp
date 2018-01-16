@@ -20,3 +20,16 @@ QString NativeApp::getDeviceId() const
     }
     return result.toString();
 }
+
+void NativeApp::loginKakao()
+{
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    activity.callMethod<void>("loginKakao", "()V");
+
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck())
+    {
+      env->ExceptionDescribe();
+      env->ExceptionClear();
+    }
+}
