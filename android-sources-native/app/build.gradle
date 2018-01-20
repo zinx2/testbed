@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -11,6 +12,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
     }
 }
 
@@ -24,9 +28,13 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.android.gms:play-services:11.0.4'
+    compile 'com.android.support:multidex:1.0.1'
+//implementation 'com.android.support:appcompat-v7:26.0.2'
+    compile 'com.facebook.android:facebook-android-sdk:4.+'
 
     // 카카오 로그인 sdk를 사용하기 위해 필요.
     compile group: 'com.kakao.sdk', name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+
 
 //    // 카카오링크 sdk를 사용하기 위해 필요.
 //    compile group: 'com.kakao.sdk', name: 'kakaolink', version: project.KAKAO_SDK_VERSION
@@ -61,6 +69,10 @@ android {
     compileSdkVersion androidCompileSdkVersion.toInteger()
 
     buildToolsVersion androidBuildToolsVersion
+
+    defaultConfig {
+        multiDexEnabled true
+    }
 
     sourceSets {
         main {

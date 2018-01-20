@@ -26,7 +26,21 @@ void Java_ac_olei_testbed_MainActivity_pause(JNIEnv *env, jobject obj)
     }
 }
 
-void Java_ac_olei_testbed_MainActivity_loginFinished(JNIEnv *env, jobject obj, jboolean isSuccess)
+void Java_ac_olei_testbed_MainActivity_loginFinished(JNIEnv *env, jobject obj, jboolean isSuccess, jstring result)
+{
+    Q_UNUSED(obj)
+
+    NativeApp* app = NativeApp::getInstance();
+    if(app){
+
+        const char * qresult = env->GetStringUTFChars(result, NULL);
+
+        app = NativeApp::getInstance();
+        app->notifyLoginResult(isSuccess, qresult);
+    }
+}
+
+void Java_ac_olei_testbed_MainActivity_logoutFinished(JNIEnv *env, jobject obj, jboolean isSuccess)
 {
     Q_UNUSED(env)
     Q_UNUSED(obj)
@@ -34,7 +48,33 @@ void Java_ac_olei_testbed_MainActivity_loginFinished(JNIEnv *env, jobject obj, j
     NativeApp* app = NativeApp::getInstance();
     if(app){
         app = NativeApp::getInstance();
-        app->notifyLoginResult(isSuccess);
+        app->notifyLogoutResult(isSuccess);
+    }
+}
+
+void Java_ac_olei_testbed_MainActivity_withdrawFinished(JNIEnv *env, jobject obj, jboolean isSuccess)
+{
+    Q_UNUSED(env)
+    Q_UNUSED(obj)
+
+    NativeApp* app = NativeApp::getInstance();
+    if(app){
+        app = NativeApp::getInstance();
+        app->notifyWithdrawResult(isSuccess);
+    }
+}
+
+void Java_ac_olei_testbed_MainActivity_notifyTokenInfo(JNIEnv *env, jobject obj, jboolean isSuccess, jstring result)
+{
+    Q_UNUSED(obj)
+
+    NativeApp* app = NativeApp::getInstance();
+    if(app){
+
+        const char* qresult = env->GetStringUTFChars(result, NULL);
+
+        app = NativeApp::getInstance();
+        app->notifyTokenInfo(isSuccess, qresult);
     }
 }
 

@@ -33,3 +33,68 @@ void NativeApp::loginKakao()
       env->ExceptionClear();
     }
 }
+
+void NativeApp::logoutKakao()
+{
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    activity.callMethod<void>("logoutKakao", "()V");
+
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck())
+    {
+      env->ExceptionDescribe();
+      env->ExceptionClear();
+    }
+}
+
+void NativeApp::withdrawKakao()
+{
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    activity.callMethod<void>("withdrawKakao", "()V");
+
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck())
+    {
+      env->ExceptionDescribe();
+      env->ExceptionClear();
+    }
+}
+
+void NativeApp::loginFacebook()
+{
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    activity.callMethod<void>("loginFacebook", "()V");
+
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck())
+    {
+      env->ExceptionDescribe();
+      env->ExceptionClear();
+    }
+}
+
+void NativeApp::logoutFacebook()
+{
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    activity.callMethod<void>("logoutFacebook", "()V");
+
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck())
+    {
+      env->ExceptionDescribe();
+      env->ExceptionClear();
+    }
+}
+
+void NativeApp::withdrawFacebook()
+{
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    activity.callMethod<void>("withdrawFacebook", "()V");
+
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck())
+    {
+      env->ExceptionDescribe();
+      env->ExceptionClear();
+    }
+}

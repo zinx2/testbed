@@ -1,4 +1,4 @@
-package net.techpda.snslogin;
+package ac.olei.testbed;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,8 +24,7 @@ public class KakaoSDKAdapter extends KakaoAdapter {
 
             @Override
             public Context getApplicationContext() {
-
-                return ApplicationController.getInstance();
+                return GlobalApplication.getInstance();
             }
         };
     }

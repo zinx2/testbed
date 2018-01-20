@@ -1,8 +1,9 @@
 #include "native_app.h"
-
+#include <QDebug>
 NativeApp* NativeApp::m_instance = nullptr;
 NativeApp::NativeApp(QObject *parent) : QObject(parent)
 {
+
 }
 NativeApp::~NativeApp()
 {
@@ -24,12 +25,36 @@ void NativeApp::pause()
 
 }
 
-void NativeApp::notifyLoginResult(bool result)
+void NativeApp::notifyLoginResult(bool isSuccess, const char* result)
 {
-    if(result)
-        emit loginSuccess();
+    if(isSuccess)
+        emit loginSuccess(result);
     else
-        emit loginFailed();
+        emit loginFailed(result);
+}
+
+void NativeApp::notifyLogoutResult(bool isSuccess)
+{
+    if(isSuccess)
+        emit logoutSuccess();
+    else
+        emit logoutFailed();
+}
+
+void NativeApp::notifyWithdrawResult(bool isSuccess)
+{
+    if(isSuccess)
+        emit withdrawSuccess();
+    else
+        emit withdrawFailed();
+}
+
+void NativeApp::notifyTokenInfo(bool isSuccess, const char* result)
+{
+    if(isSuccess)
+        emit tokenInfoSuccess(result);
+    else
+        emit tokenInfoFailed(result);
 }
 
 
@@ -42,6 +67,26 @@ QString NativeApp::getDeviceId() const
 void NativeApp::loginKakao()
 {
     qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
+}
+void NativeApp::logoutKakao()
+{
+    qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
+}
+void NativeApp::withdrawKakao()
+{
+    qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
+}
+void NativeApp::loginFacebook()
+{
+	qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
+}
+void NativeApp::logoutFacebook()
+{
+	qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
+}
+void NativeApp::withdrawFacebook()
+{
+	qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
 }
 #endif
 

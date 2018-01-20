@@ -6,8 +6,10 @@
 #include "option.h"
 #include "networker.h"
 #include "commander.h"
+#include "settings.h"
 #include "imageresponseprovider.h"
 #include <QThread>
+#include <QSettings>
 
 int main(int argc, char *argv[])
 {
@@ -15,11 +17,14 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     DisplayInfo dpInfo;
 	
+
+
 	Option opt; opt.setDs(false);
 
 	Model *model = Model::getInstance();
     NetWorker *wk = NetWorker::getInstance();
     Commander *cmd = Commander::getInstance();
+    Settings *settings = Settings::getInstance();
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("di", &dpInfo);
@@ -27,6 +32,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("wk", wk);
 	engine.rootContext()->setContextProperty("opt", &opt);
     engine.rootContext()->setContextProperty("cmd", cmd);
+    engine.rootContext()->setContextProperty("settings", settings);
 	engine.addImageProvider("async", new AsyncImageProvider);
 
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));

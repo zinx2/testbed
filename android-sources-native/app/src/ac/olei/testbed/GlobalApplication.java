@@ -1,4 +1,4 @@
-package net.techpda.snslogin;
+package ac.olei.testbed;
 
 import android.app.Activity;
 import android.app.Application;
@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
+import android.support.multidex.MultiDex;
 
 import com.kakao.auth.KakaoSDK;
 
@@ -15,22 +16,29 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import static com.kakao.util.helper.Utility.getPackageInfo;
+import org.qtproject.qt5.android.bindings.QtApplication;
 
 /**
  * Created by JHKim on 2018-01-13.
  */
 
-public class ApplicationController extends Application {
-    private static ApplicationController instance = null;
+public class GlobalApplication extends QtApplication {
+    private static GlobalApplication instance = null;
     private static volatile Activity currentActivity = null;
 
-    public static ApplicationController getInstance() { return instance; }
+    public static GlobalApplication getInstance() { return instance; }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+       super.attachBaseContext(base);
+       MultiDex.install(this);
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        ApplicationController.instance = this;
+        GlobalApplication.instance = this;
         KakaoSDK.init(new KakaoSDKAdapter());
 
         Log.e("Key Hash : ", getKeyHash(this));
@@ -39,7 +47,7 @@ public class ApplicationController extends Application {
     public static Activity getCurrentActivity() { return currentActivity; }
 
     public static void setCurrentAcitivity(Activity currentActivity) {
-        ApplicationController.currentActivity = currentActivity;
+        GlobalApplication.currentActivity = currentActivity;
     }
 
     @Override
@@ -64,4 +72,6 @@ public class ApplicationController extends Application {
         }
         return null;
     }
+
+
 }

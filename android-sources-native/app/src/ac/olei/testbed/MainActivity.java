@@ -52,21 +52,26 @@ package ac.olei.testbed;
 
 import java.io.IOException;
 
-import android.os.Build;
-import android.os.Bundle;
 import android.app.Notification;
 import android.app.NotificationManager;
+
+import android.content.SharedPreferences;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
+import android.os.Build;
+import android.os.Bundle;
+import android.os.AsyncTask;
 
 import android.view.Window;
 import android.view.WindowManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.content.SharedPreferences;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
+
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.ConnectionResult;
@@ -76,14 +81,47 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import com.kakao.auth.ApiResponseCallback;
+import com.kakao.auth.AuthService;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
+import com.kakao.auth.network.response.AccessTokenInfoResponse;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.UnLinkResponseCallback;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.exception.KakaoException;
+import com.kakao.util.helper.log.Logger;
+
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.Profile;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
 {
     private native void resume();
     private native void pause();
-    private native void loginFinished(boolean isSuccess);
+    private native void loginFinished(boolean isSuccess, String result);
+    private native void logoutFinished(boolean isSuccess);
+    private native void withdrawFinished(boolean isSuccess);
+    private native void notifyTokenInfo(boolean isSuccess, String result);
 
 //    public static final String TAG = "MainActivity";
 //    private static final String GCM_PROJECT_ID_KEY = "org.koreatech.trizcontradiction.GcmProjectId";
@@ -102,6 +140,24 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
     Context context;
     String regid;
 
+    public enum LoginType
+    {
+        NONE(0), EMAIL(1), KAKAO(2), FACEBOOK(3);
+        private int value;
+        private LoginType(int value)
+        {
+            this.value = value;
+        }
+        public int getValue()
+        {
+            return this.value;
+        }
+    }
+    private LoginType requestedSNSType = LoginType.NONE; /* 0:로그인X, 1:이메일, 2:카카오, 3:페이스북 */
+
+    private SessionCallback callback;
+    private CallbackManager callbackManager;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -114,12 +170,18 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
             regid = getRegistrationId(context);
             Log.d("ANDROID Registration ID >>", regid);
             if (regid.isEmpty()) {
-    registerInBackground();
-}
-} else {
-        Log.i(TAG, "No valid Google Play Services APK found.");
+                registerInBackground();
+            }
+        } else {
+            Log.i(TAG, "No valid Google Play Services APK found.");
         }
-        }
+
+        callback = new SessionCallback();
+        Session.getCurrentSession().addCallback(callback);
+
+        AppEventsLogger.activateApp(getApplication());
+        callbackManager = CallbackManager.Factory.create();
+    }
 
     @Override
     public void onResume()
@@ -131,12 +193,18 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         pause();
         super.onPause();
     }
 
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        Session.getCurrentSession().removeCallback(callback);
+    }
 
     public String getDeviceId()
     {
@@ -254,8 +322,274 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
 
     public void loginKakao()
     {
-        Log.d("LOG MESSAGE", "LOGGINED KAKAO");
-        loginFinished(true);
+        requestedSNSType = LoginType.KAKAO;
+        new KaKaoLoginControl(MainActivity.this).call();
     }
 
+    public void logoutKakao()
+    {
+        UserManagement.requestLogout(new LogoutResponseCallback() {
+            @Override
+            public void onCompleteLogout() {
+                logoutFinished(true);
+            }
+        });
+    }
+
+    public void withdrawKakao()
+    {
+        UserManagement.requestUnlink(new UnLinkResponseCallback() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                withdrawFinished(false);
+            }
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                withdrawFinished(false);
+            }
+
+            @Override
+            public void onNotSignedUp() {
+                /* No Anything... */
+            }
+
+            @Override
+            public void onSuccess(Long result) {
+                withdrawFinished(true);
+            }
+        });
+    }
+
+    private class SessionCallback implements ISessionCallback {
+        @Override
+        public void onSessionOpened() {
+
+            /* REQUEST ME. */
+            List<String> propertyKeys = new ArrayList<String>();
+            propertyKeys.add("kaccount_email");
+            propertyKeys.add("nickname");
+            propertyKeys.add("profile_image");
+            propertyKeys.add("thumbnail_image");
+
+            UserManagement.requestMe(new MeResponseCallback() {
+                @Override
+                public void onFailure(ErrorResult errorResult)
+                {
+                    String message = "failed to get use rinfo. msg=" + errorResult;
+
+                    String result = "";
+                    JSONObject jObj = new JSONObject();
+                    try {
+                        jObj.put("is_logined", false);
+                        jObj.put("error_message", message);
+                        result = jObj.toString();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    loginFinished(true, result);
+                }
+
+                @Override
+                public void onSessionClosed(ErrorResult errorResult)
+                {
+                    String message = "failed to get use rinfo. msg=" + errorResult;
+
+                    String result = "";
+                    JSONObject jObj = new JSONObject();
+                    try {
+                        jObj.put("is_logined", false);
+                        jObj.put("error_message", message);
+                        result = jObj.toString();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    loginFinished(true, result);
+                }
+
+                @Override
+                public void onNotSignedUp()
+                {
+                    /* WHEN ALREADY SIGNED UP. */
+                }
+
+                @Override
+                public void onSuccess(UserProfile userProfile)
+                {
+                    requestAccessTokenInfo();
+
+                    String result = "";
+                    JSONObject jUserProfile = new JSONObject();
+                    try {
+                        jUserProfile.put("is_logined", false); /* 카카오톡은 매번 이쪽으로 진입. 따라서, false */
+                        jUserProfile.put("nickname", userProfile.getNickname());
+                        jUserProfile.put("email", userProfile.getEmail());
+                        jUserProfile.put("thumbnail_image", userProfile.getThumbnailImagePath());
+                        jUserProfile.put("profile_image", userProfile.getProfileImagePath());
+                        result = jUserProfile.toString();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    loginFinished(true, result);
+                }
+            }, propertyKeys, false);
+        }
+
+        private void requestAccessTokenInfo() {
+            AuthService.requestAccessTokenInfo(new ApiResponseCallback<AccessTokenInfoResponse>() {
+                @Override
+                public void onSessionClosed(ErrorResult errorResult) {
+
+                    String message = "failed to get access token info. msg=" + errorResult;
+                    notifyTokenInfo(false, message);
+                }
+
+                @Override
+                public void onNotSignedUp() {
+                    // not happened
+                }
+
+                @Override
+                public void onFailure(ErrorResult errorResult) {
+                    String message = "failed to get token info. msg=" + errorResult;
+                    notifyTokenInfo(false, message);
+                }
+
+                @Override
+                public void onSuccess(AccessTokenInfoResponse accessTokenInfoResponse) {
+                    long userId = accessTokenInfoResponse.getUserId();
+//                    Logger.d("this access token is for userId=" + Long.toString(userId));
+
+                    long expiresInMilis = accessTokenInfoResponse.getExpiresInMillis();
+                    Logger.d("this access token expires after " + expiresInMilis + " milliseconds.");
+                    notifyTokenInfo(true, Long.toString(userId));
+                }
+            });
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+            if(exception != null) {
+                Logger.e(exception);
+            }
+            loginFinished(false, "Can't Open Failed.");
+        }
+    }
+
+    public void loginFacebook()
+    {
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        if(token != null) {
+            String result = "";
+            JSONObject jUserProfile = new JSONObject();
+            try {
+                jUserProfile.put("is_logined", true);
+                result = jUserProfile.toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            loginFinished(true, result);
+            return;
+        }
+
+        requestedSNSType = LoginType.FACEBOOK;
+        List<String> permissionNeeds= Arrays.asList("user_photos", "email");
+        LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, permissionNeeds);
+        LoginManager.getInstance().registerCallback(callbackManager, new
+                FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.d("TAG", "FACEBOOK TOKEN >> " + loginResult.getAccessToken().getToken());
+                        Log.d("TAG", "FACEBOOK UserID >> " + loginResult.getAccessToken().getUserId());
+
+                        GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                Log.d("result", object.toString());
+
+                                String result = "";
+                                JSONObject jUserProfile = new JSONObject();
+                                try {
+                                    jUserProfile.put("is_logined", false);
+                                    jUserProfile.put("nickname", object.getString("name"));
+                                    jUserProfile.put("email", object.getString("email"));
+
+                                    Profile profile = Profile.getCurrentProfile();
+                                    String profile_image = profile.getProfilePictureUri(200, 200).toString();
+
+                                    jUserProfile.put("thumbnail_image", profile_image);
+                                    jUserProfile.put("profile_image", profile_image);
+                                    result = jUserProfile.toString();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                loginFinished(true, result);
+                            }
+                        });
+
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email,gender,birthday");
+                        graphRequest.setParameters(parameters);
+                        graphRequest.executeAsync();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d("TAG", "CANCEL");
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+
+                        String result = "";
+                        JSONObject jUserProfile = new JSONObject();
+                        try {
+                            jUserProfile.put("is_logined", true);
+                            jUserProfile.put("error_message", error.toString());
+                            result = jUserProfile.toString();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        loginFinished(false, result);
+                        error.printStackTrace();
+                    }
+                });
+    }
+
+    public void logoutFacebook()
+    {
+        LoginManager.getInstance().logOut();
+        logoutFinished(true);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch(requestedSNSType)
+        {
+            case NONE:
+            case EMAIL:
+                break;
+            case KAKAO:
+            {
+                if(Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data))
+                    return;
+                break;
+            }
+            case FACEBOOK:
+            {
+                callbackManager.onActivityResult(requestCode, resultCode, data);
+                break;
+            }
+        }
+
+        requestedSNSType = LoginType.NONE;
+    }
 }

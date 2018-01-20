@@ -13,12 +13,12 @@ class NetWorker : public QObject
 {
 	Q_OBJECT
 public:
-	static NetWorker* getInstance() 
-	{
-		if (m_instance == nullptr)
-			m_instance = new NetWorker();
-		return m_instance;
-	}
+    static NetWorker* getInstance()
+    {
+        if (m_instance == nullptr)
+            m_instance = new NetWorker();
+        return m_instance;
+    }
 
 	void requestGET(QNetworkRequest req, std::function<void()> parser);
 	void requestPOST(QNetworkRequest req, std::function<void()> parser);	

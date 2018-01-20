@@ -23,7 +23,8 @@ HEADERS += \
     src/networker.h \
     src/imageresponseprovider.h \
     src/imagebinaryloader.h \
-    src/commander.h
+    src/commander.h \
+    src/settings.h
 
 SOURCES += \
     src/main.cpp \
@@ -32,7 +33,8 @@ SOURCES += \
     src/networker.cpp \
     src/instance_creator.cpp \
     src/imagebinaryloader.cpp \
-    src/commander.cpp
+    src/commander.cpp \
+    src/settings.cpp
 
 RESOURCES += qml.qrc \
     img.qrc \
@@ -72,7 +74,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    img/splash.jpg
+    img/splash.jpg \
+    android-sources-native/app/src/ac/olei/testbed/KaKaoLoginControl.java \
+    android-sources-native/app/src/ac/olei/testbed/KakaoSDKAdapter.java \
+    android-sources-native/app/src/ac/olei/testbed/KakaoSignupActivity.java
 
 #ANDROID
 DISTFILES += $$files(android-sources-native/app/*.*)

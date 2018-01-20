@@ -17,8 +17,18 @@ public:
 	void resume();
 	void pause();
     void loginKakao();
+    void logoutKakao();
+    void joinKakao();
+    void withdrawKakao();
 
-    void notifyLoginResult(bool result);
+	void loginFacebook();
+	void logoutFacebook();
+	void withdrawFacebook();
+
+    void notifyLoginResult(bool isSuccess, const char* result);
+    void notifyLogoutResult(bool isSuccess);
+    void notifyWithdrawResult(bool isSuccess);
+    void notifyTokenInfo(bool isSuccess, const char* result);
 
     public slots:
     QString getDeviceId() const;
@@ -26,8 +36,14 @@ public:
 signals:
 	void resumed();
 	void paused();
-    void loginSuccess();
-    void loginFailed();
+    void loginSuccess(const char* result);
+    void loginFailed(const char* result);
+    void logoutSuccess();
+    void logoutFailed();
+    void withdrawSuccess();
+    void withdrawFailed();
+    void tokenInfoSuccess(const char* result);
+    void tokenInfoFailed(const char* result);
 
 private:
     static NativeApp* m_instance;

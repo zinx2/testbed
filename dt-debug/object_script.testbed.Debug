@@ -6,6 +6,7 @@ INPUT(
 ./debug\instance_creator.o
 ./debug\imagebinaryloader.o
 ./debug\commander.o
+./debug\settings.o
 ./debug\qrc_qml.o
 ./debug\qrc_img.o
 ./debug\qrc_font.o
@@ -17,4 +18,5 @@ INPUT(
 ./debug\moc_imageresponseprovider.o
 ./debug\moc_imagebinaryloader.o
 ./debug\moc_commander.o
+./debug\moc_settings.o
 );

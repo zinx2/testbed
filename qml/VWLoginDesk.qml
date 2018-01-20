@@ -39,7 +39,7 @@ Rectangle {
         {
             sourceWidth: parent.width
             sourceHeight: R.height_button_middle
-            btnName: "카카오톡 로그인"
+            btnName: "카카오 로그인"
             rectColor: R.color_kut_lightBlue
             textColor: "white"
             onClicked:
@@ -62,6 +62,52 @@ Rectangle {
         {
             sourceWidth: parent.width
             sourceHeight: R.height_button_middle
+            btnName: "카카오 로그아웃"
+            rectColor: R.color_kut_lightBlue
+            textColor: "white"
+            onClicked:
+            {
+                /* DESIGN LOGIC */
+                if(opt.ds)
+                {
+
+
+
+                    return; /* PLEASE DON'T REMVOE! */
+                }
+
+                /* NOT DESIGN LOGIC */
+                cmd.logoutKakao();
+            }
+        }
+
+        CPButton
+        {
+            sourceWidth: parent.width
+            sourceHeight: R.height_button_middle
+            btnName: "카카오 연결해제"
+            rectColor: R.color_kut_lightBlue
+            textColor: "white"
+            onClicked:
+            {
+                /* DESIGN LOGIC */
+                if(opt.ds)
+                {
+
+
+
+                    return; /* PLEASE DON'T REMVOE! */
+                }
+
+                /* NOT DESIGN LOGIC */
+                cmd.withdrawKakao();
+            }
+        }
+
+        CPButton
+        {
+            sourceWidth: parent.width
+            sourceHeight: R.height_button_middle
             btnName: "페이스북 로그인"
             rectColor: R.color_kut_lightBlue
             textColor: "white"
@@ -77,7 +123,53 @@ Rectangle {
                 }
 
                 /* NOT DESIGN LOGIC */
+                cmd.loginFacebook();
+            }
+        }
 
+        CPButton
+        {
+            sourceWidth: parent.width
+            sourceHeight: R.height_button_middle
+            btnName: "페이스북 로그아웃"
+            rectColor: R.color_kut_lightBlue
+            textColor: "white"
+            onClicked:
+            {
+                /* DESIGN LOGIC */
+                if(opt.ds)
+                {
+
+
+
+                    return; /* PLEASE DON'T REMVOE! */
+                }
+
+                /* NOT DESIGN LOGIC */
+                cmd.logoutFacebook();
+            }
+        }
+
+        CPButton
+        {
+            sourceWidth: parent.width
+            sourceHeight: R.height_button_middle
+            btnName: "페이스북 연결해제"
+            rectColor: R.color_kut_lightBlue
+            textColor: "white"
+            onClicked:
+            {
+                /* DESIGN LOGIC */
+                if(opt.ds)
+                {
+
+
+
+                    return; /* PLEASE DON'T REMVOE! */
+                }
+
+                /* NOT DESIGN LOGIC */
+                cmd.withdrawFacebook();
             }
         }
 
@@ -103,6 +195,49 @@ Rectangle {
                 stackView.push(Qt.createComponent(R.view_file_joinDesk), { });
             }
         }
-    }
 
+        CPText
+        {
+            id: lb_snsType
+            font.pointSize: R.pt(18)
+            text: {
+                var type = settings.snsType;
+                switch(type)
+                {
+                case 0: return "로그인되지 않음";
+                case 1: return "이메일로 로그인";
+                case 2: return "카카오로 로그인";
+                case 3: return "페이스북으로 로그인"
+                }
+            }
+        }
+
+        CPText
+        {
+            id: lb_nickName
+            font.pointSize: R.pt(18)
+            text: "NICKNAME : " + settings.nickName
+        }
+
+        CPText
+        {
+            id: lb_email
+            font.pointSize: R.pt(18)
+            text: "EMAIL : " + settings.email
+        }
+
+        CPText
+        {
+            id: lb_thumbnail
+            font.pointSize: R.pt(18)
+            text: "THUMBNAIL IMAGE : " + settings.thumbnailImage
+        }
+
+        CPText
+        {
+            id: lb_profile
+            font.pointSize: R.pt(18)
+            text: "PROFILE IMAGE : " + settings.profileImage
+        }
+    }
 }

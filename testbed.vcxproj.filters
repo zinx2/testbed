@@ -1,0 +1,519 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Distribution Files">
+      <UniqueIdentifier>{B83CAF91-C7BF-462F-B76C-EA11631F866C}</UniqueIdentifier>
+      <Extensions>*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Distribution Files">
+      <UniqueIdentifier>{B83CAF91-C7BF-462F-B76C-EA11631F866C}</UniqueIdentifier>
+      <Extensions>*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{225d0e7d-5ba1-4ce1-ae25-801c415e6bec}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{248c3f2e-494b-43ca-95c7-b35bbc7f95fc}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\commander.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\display_information.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imagebinaryloader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\instance_creator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\native_app.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\networker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_settings.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_settings.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_option.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_option.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_imagebinaryloader.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_imagebinaryloader.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_display_information.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_display_information.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_commander.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_commander.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_networker.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_networker.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_native_app.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_native_app.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_model.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_model.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_imageresponseprovider.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_imageresponseprovider.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_font.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_img.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_qml.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\commander.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\display_information.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\imagebinaryloader.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\imageresponseprovider.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\model.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\native_app.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\networker.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\option.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\settings.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="debug\moc_predefs.h.cbt">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="release\moc_predefs.h.cbt">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="qml\CPButton.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\CPImage.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\CPImageView.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\CPListView.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\CPPopup.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\CPSearchBar.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\CPText.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\CPTextField.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\CPToast.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\LYMargin.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="font\NanumBarunGothic_android.ttf">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="font\NanumBarunGothic_ios.ttf">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\Paper.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\Resources.js">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\VWDesc.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\VWHome.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\VWJoinDesk.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\VWJoinEmail.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\VWLoginDesk.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="qml\VWLoginEmail.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\back_white.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\btn_next.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\btn_pre.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\close_white.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <CustomBuild Include="font.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <None Include="img\ic_launcher.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <CustomBuild Include="img.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <None Include="qml\main.qml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_1.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_10.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_11.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_12.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_13.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_14.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_15.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_16.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_17.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_18.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_19.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_2.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_20.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_21.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_22.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_23.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_24.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_25.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_26.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_27.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_28.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_29.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_3.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_30.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_31.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_32.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_33.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_34.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_35.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_36.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_37.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_38.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_39.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_4.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_40.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_5.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_6.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_7.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_8.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\principe_9.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <CustomBuild Include="qml.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <None Include="qtquickcontrols2.conf">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\search_white.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="img\splash.png">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="android-sources-native\app\.gitignore">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\AndroidManifest.xml">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\src\ac\olei\testbed\GcmBroadcastReceiver.java">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\src\ac\olei\testbed\GcmIntentService.java">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\src\ac\olei\testbed\GlobalApplication.java">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="ios-sources-native\Images.xcassets">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="ios-sources-native\Images.xcassets\Images.xcassets">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="ios-sources-native\Info.plist">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\src\ac\olei\testbed\KaKaoLoginControl.java">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\src\ac\olei\testbed\KakaoSDKAdapter.java">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\src\ac\olei\testbed\KakaoSignupActivity.java">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\src\ac\olei\testbed\MainActivity.java">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="ios-sources-native\SplashLaunchScreen.xib">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="ios-sources-native\appdelegate.h">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="ios-sources-native\appdelegate.mm">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\build.gradle">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\values\colors.xml">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\gradle.properties">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\drawable-v24\ic_launcher.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\drawable\ic_launcher.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\mipmap-hdpi\ic_launcher.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\mipmap-mdpi\ic_launcher.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\mipmap-xhdpi\ic_launcher.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\mipmap-xxhdpi\ic_launcher.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\mipmap-xxxhdpi\ic_launcher.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\mipmap-anydpi-v26\ic_launcher.xml">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\drawable\ic_launcher_background.xml">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\drawable-v24\ic_launcher_foreground.xml">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\mipmap-hdpi\ic_launcher_round.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\mipmap-mdpi\ic_launcher_round.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\mipmap-xhdpi\ic_launcher_round.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\mipmap-xxhdpi\ic_launcher_round.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\mipmap-xxxhdpi\ic_launcher_round.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\mipmap-anydpi-v26\ic_launcher_round.xml">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\proguard-rules.pro">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="img\splash.jpg">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\values\strings.xml">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android-sources-native\app\res\values\styles.xml">
+      <Filter>Distribution Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

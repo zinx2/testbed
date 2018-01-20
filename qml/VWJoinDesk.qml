@@ -43,7 +43,7 @@ Paper {
         {
             sourceWidth: parent.width
             sourceHeight: R.height_button_middle
-            btnName: "카카오톡 회원가입"
+            btnName: "카카오 회원가입"
             rectColor: R.color_kut_lightBlue
             textColor: "white"
             onClicked:
