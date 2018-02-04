@@ -58,7 +58,7 @@ Paper {
                 }
 
                 /* NOT DESIGN LOGIC */
-                cmd.joinSNS();
+                cmd.joinKakao();
             }
         }
 

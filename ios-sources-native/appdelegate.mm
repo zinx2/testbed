@@ -16,7 +16,6 @@
 @end
 
 @interface QIOSApplicationDelegate(AppDelegate)
-- (void)loginFinished:(BOOL)isSuccess result:(NSString*)resultStr;
 @end
 
 @implementation QIOSApplicationDelegate (AppDelegate)
@@ -25,14 +24,17 @@ QString NativeApp::getDeviceId() const
 {
     return "123456789101110";
 }
-
+void NativeApp::joinKakao()
+{
+    loginKakao();
+}
 void NativeApp::loginKakao()
 {
     [[KOSession sharedSession] close];
     
     [[KOSession sharedSession] openWithCompletionHandler:^(NSError *error) {
        
-        if([KOSession sharedSession].accessToken == nullptr)
+        if([KOSession sharedSession].accessToken != nullptr)
         {
             [KOSessionTask meTaskWithCompletionHandler:^(KOUser* result, NSError *error) {
                 NSString *uuid = [result.ID stringValue];
@@ -40,7 +42,7 @@ void NativeApp::loginKakao()
                 NSString *name = [result propertyForKey:@"nickname"];
                 if(name == nil) name = @"";
                 
-                NSString *email = [result propertyForKey:@"email"];
+                NSString *email = result.email;
                 if(email == nil) email = @"";
                 
                 NSString *profileImage = [result propertyForKey:@"profile_image"];
@@ -55,7 +57,8 @@ void NativeApp::loginKakao()
                         @"nickname":name,
                         @"email":email,
                         @"profile_image":profileImage,
-                        @"thumbnail_image":thumbnailImage
+                        @"thumbnail_image":thumbnailImage,
+                        @"error_message":error.localizedDescription
                 };
                 
                 NSData *infoObj = [NSJSONSerialization dataWithJSONObject:info options:0 error:nil];
@@ -67,17 +70,6 @@ void NativeApp::loginKakao()
                     const char* qresult = [infoStr UTF8String];
                     app->notifyLoginResult(true, qresult);
                 }
-                
-                [KOSessionTask signupTaskWithProperties:nil completionHandler:^(BOOL success, NSError *error) {
-                    if([[KOSession sharedSession] isOpen]) {
-                        //login success
-                        NSLog(@"connected succeed.");
-                        
-                    } else {
-                        //failed
-                        NSLog(@"connected failed.");
-                    }
-                }];
             }];
         }
         
@@ -88,6 +80,11 @@ void NativeApp::loginKakao()
         } else {
             //failed
             NSLog(@"login failed.");
+            NativeApp* app = NativeApp::getInstance();
+            if(app){
+                app = NativeApp::getInstance();
+                app->notifyLogoutResult(true);
+            }
         }
         
     } authType:(KOAuthType)KOAuthTypeTalk, nil];
@@ -98,6 +95,11 @@ void NativeApp::withdrawKakao()
     [KOSessionTask unlinkTaskWithCompletionHandler:^(BOOL success, NSError *error) {
         if(success) {
             NSLog(@"app disconnection success.");
+            NativeApp* app = NativeApp::getInstance();
+            if(app){
+                app = NativeApp::getInstance();
+                app->notifyWithdrawResult(true);
+            }
         } else {
             NSLog(@"app disconnection failed.");
         }
@@ -110,6 +112,11 @@ void NativeApp::logoutKakao()
         if (success) {
             // logout success.
             NSLog(@"logout success.");
+            NativeApp* app = NativeApp::getInstance();
+            if(app){
+                app = NativeApp::getInstance();
+                app->notifyLogoutResult(true);
+            }
         } else {
             // failed
             NSLog(@"failed to logout.");
@@ -131,15 +138,7 @@ void NativeApp::withdrawFacebook()
 {
     
 }
--(void)loginFinished:(BOOL)isSuccess result:(NSString*)resultStr
-{
-    NativeApp* app = NativeApp::getInstance();
-    if(app)
-    {
-        const char* qresult = [resultStr UTF8String];
-        app->notifyLoginResult(isSuccess, qresult);
-    }
-}
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {

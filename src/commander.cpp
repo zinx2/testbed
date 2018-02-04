@@ -29,6 +29,12 @@ void Commander::joinSNS()
     qDebug() << "JOIN USING SNS";
 }
 
+void Commander::joinKakao()
+{
+    qDebug() << "JOIN USING SNS";
+    app->joinKakao();
+}
+
 void Commander::loginKakao()
 {
     qDebug() << "LOGIN USING SNS";    

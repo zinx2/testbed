@@ -16,9 +16,10 @@ public:
 
 	void resume();
 	void pause();
+
+    void joinKakao(); /* connect app */
     void loginKakao();
     void logoutKakao();
-    void joinKakao();
     void withdrawKakao();
 
 	void loginFacebook();

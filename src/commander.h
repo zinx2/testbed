@@ -20,6 +20,8 @@ public:
 public slots:
     void joinSNS();
 
+    void joinKakao();
+
     void loginKakao();
     void logoutKakao();
     void withdrawKakao();

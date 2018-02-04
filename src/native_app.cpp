@@ -64,6 +64,10 @@ QString NativeApp::getDeviceId() const
 {
     return "123456789011123";
 }
+void NativeApp::joinKakao()
+{
+    qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
+}
 void NativeApp::loginKakao()
 {
     qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
