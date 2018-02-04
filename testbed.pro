@@ -60,6 +60,11 @@ ios {
     QMAKE_BUNDLE_DATA += assets_catalogs
     QMAKE_INFO_PLIST = $$PWD/ios-sources-native/info.plist
 
+    #KAKAOTALK
+    LIBS += -F$$PWD/ios-libraries/KakaoSDK \
+            -framework KakaoOpenSDK
+    LIBS += -force_load ($$PWD/ios-libraries/KakaoSDK/KakaoOpenSDK.framework/KakaoOpenSDK)
+
 }
 
 # Additional import path used to resolve QML modules in Qt Creator's code model

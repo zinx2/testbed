@@ -4,6 +4,8 @@
 /* IF YOU WANT TO USE THE IMPLEMENTATION, PLEASE ADD LIBRARY AT 'Build Phases' USING 'Xcode' PROGRAM. */
 #import "UserNotifications/UserNotifications.h"     /* -> 'UserNotifications.framework' */
 #import "AudioToolBox/AudioToolBox.h"               /* -> 'AudioToolbox.framework' */
+#import "KakaoOpenSDK/KakaoOpenSDK.h"
+
 /*********************************************/
 
 #include <QtCore>
@@ -14,13 +16,166 @@
 @end
 
 @interface QIOSApplicationDelegate(AppDelegate)
+- (void)loginFinished:(BOOL)isSuccess result:(NSString*)resultStr;
 @end
 
 @implementation QIOSApplicationDelegate (AppDelegate)
 
+QString NativeApp::getDeviceId() const
+{
+    return "123456789101110";
+}
+
+void NativeApp::loginKakao()
+{
+    [[KOSession sharedSession] close];
+    
+    [[KOSession sharedSession] openWithCompletionHandler:^(NSError *error) {
+       
+        if([KOSession sharedSession].accessToken == nullptr)
+        {
+            [KOSessionTask meTaskWithCompletionHandler:^(KOUser* result, NSError *error) {
+                NSString *uuid = [result.ID stringValue];
+                
+                NSString *name = [result propertyForKey:@"nickname"];
+                if(name == nil) name = @"";
+                
+                NSString *email = [result propertyForKey:@"email"];
+                if(email == nil) email = @"";
+                
+                NSString *profileImage = [result propertyForKey:@"profile_image"];
+                if(profileImage == nil) profileImage = @"";
+                
+                NSString *thumbnailImage = [result propertyForKey:@"thumbnail.image"];
+                if(thumbnailImage == nil) thumbnailImage = @"";
+
+                NSDictionary* info = @{
+                        @"id":uuid,
+                        @"is_logined":@NO,
+                        @"nickname":name,
+                        @"email":email,
+                        @"profile_image":profileImage,
+                        @"thumbnail_image":thumbnailImage
+                };
+                
+                NSData *infoObj = [NSJSONSerialization dataWithJSONObject:info options:0 error:nil];
+                NSString *infoStr = [[NSString alloc] initWithData:infoObj encoding:NSUTF8StringEncoding];
+
+                NativeApp* app = NativeApp::getInstance();
+                if(app)
+                {
+                    const char* qresult = [infoStr UTF8String];
+                    app->notifyLoginResult(true, qresult);
+                }
+                
+                [KOSessionTask signupTaskWithProperties:nil completionHandler:^(BOOL success, NSError *error) {
+                    if([[KOSession sharedSession] isOpen]) {
+                        //login success
+                        NSLog(@"connected succeed.");
+                        
+                    } else {
+                        //failed
+                        NSLog(@"connected failed.");
+                    }
+                }];
+            }];
+        }
+        
+        if([[KOSession sharedSession] isOpen]) {
+            //login success
+            NSLog(@"login succeed.");
+            
+        } else {
+            //failed
+            NSLog(@"login failed.");
+        }
+        
+    } authType:(KOAuthType)KOAuthTypeTalk, nil];
+}
+
+void NativeApp::withdrawKakao()
+{
+    [KOSessionTask unlinkTaskWithCompletionHandler:^(BOOL success, NSError *error) {
+        if(success) {
+            NSLog(@"app disconnection success.");
+        } else {
+            NSLog(@"app disconnection failed.");
+        }
+    }];
+}
+
+void NativeApp::logoutKakao()
+{
+    [[KOSession sharedSession] logoutAndCloseWithCompletionHandler:^(BOOL success, NSError *error) {
+        if (success) {
+            // logout success.
+            NSLog(@"logout success.");
+        } else {
+            // failed
+            NSLog(@"failed to logout.");
+        }
+    }];
+}
+
+void NativeApp::loginFacebook()
+{
+    
+}
+
+void NativeApp::logoutFacebook()
+{
+    
+}
+
+void NativeApp::withdrawFacebook()
+{
+    
+}
+-(void)loginFinished:(BOOL)isSuccess result:(NSString*)resultStr
+{
+    NativeApp* app = NativeApp::getInstance();
+    if(app)
+    {
+        const char* qresult = [resultStr UTF8String];
+        app->notifyLoginResult(isSuccess, qresult);
+    }
+}
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    
+    if ([KOSession isKakaoAccountLoginCallback:url]) {
+        return [KOSession handleOpenURL:url];
+    }
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+            options:(NSDictionary<NSString *,id> *)options {
+    
+    if ([KOSession isKakaoAccountLoginCallback:url]) {
+        return [KOSession handleOpenURL:url];
+    }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    UIViewController *qtController = [[[UIApplication sharedApplication] keyWindow]rootViewController];
+        [KOSession sharedSession].automaticPeriodicRefresh = YES;
+    // button position
+//    int xMargin = 30;
+//    int marginBottom = 25;
+//    CGFloat btnWidth = qtController.view.frame.size.width - xMargin * 2;
+//    int btnHeight = 42;
+//
+//    UIButton* kakaoLoginButton
+//    = [[KOLoginButton alloc] initWithFrame:CGRectMake(xMargin, qtController.view.frame.size.height-btnHeight-marginBottom, btnWidth, btnHeight)];
+//    kakaoLoginButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+//
+//    [qtController.view addSubview:kakaoLoginButton];
+//
+//    [KOSession sharedSession].automaticPeriodicRefresh = YES;
+    [KOSession sharedSession].clientSecret = @"fJhST4AaP9qg3rCU9c9THXGPveN2WsSc";
     [self initializeRemoteNotification];    
     return YES;
 }
@@ -136,7 +291,7 @@
     NSLog(@"Remote notification : %@", response.notification.request.content.userInfo);
     int type = [[response.notification.request.content.userInfo objectForKey:@"type"] intValue];
     NSLog(@"type : %d", type);
-    completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionBadge);
+//    completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionBadge);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -148,6 +303,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+       [KOSession handleDidEnterBackground];
 }
 
 
@@ -158,11 +314,13 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [KOSession handleDidBecomeActive];
 }
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+
 }
 
 
