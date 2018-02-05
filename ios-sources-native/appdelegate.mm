@@ -5,17 +5,112 @@
 #import "UserNotifications/UserNotifications.h"     /* -> 'UserNotifications.framework' */
 #import "AudioToolBox/AudioToolBox.h"               /* -> 'AudioToolbox.framework' */
 #import "KakaoOpenSDK/KakaoOpenSDK.h"
-
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 /*********************************************/
 
 #include <QtCore>
 
 #define isOSVersionOver10 ([[[[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."] objectAtIndex:0] integerValue] >= 10)
 
+@interface SDKTask : NSObject
+-(void)fetchFacebookUserInfo;
+-(void)fetchKakaoUserInfo;
+@end
+
 @interface QIOSApplicationDelegate
 @end
 
 @interface QIOSApplicationDelegate(AppDelegate)
+@end
+
+@implementation SDKTask
+-(void)fetchFacebookUserInfo
+{
+    FBSDKGraphRequest *requestMe = [[FBSDKGraphRequest alloc]initWithGraphPath:@"me" parameters:@{@"fields":@"id, name, email, picture"}];
+    FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
+    [connection addRequest:requestMe completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        
+        if(result)
+        {
+            NSString *uuid = @"";
+            if([result objectForKey:@"id"]) uuid = [result objectForKey:@"id"];
+            
+            NSString *name = @"";
+            if([result objectForKey:@"name"]) name = [result objectForKey:@"name"];
+            
+            NSString *email = @"";
+            if([result objectForKey:@"email"]) email = [result objectForKey:@"email"];
+
+            NSString *profileImage = @"";
+            id picRst = [result objectForKey:@"picture"];
+            if(picRst)
+            {
+                picRst = [picRst objectForKey:@"data"];
+                if(picRst) {
+                    picRst = [picRst objectForKey:@"url"];
+                    if(picRst)
+                        profileImage = (NSString*)picRst;
+                }
+            }
+            
+            NSDictionary* info = @{
+                                   @"id":uuid,
+                                   @"is_logined":@0,
+                                   @"nickname":name,
+                                   @"email":email,
+                                   @"profile_image":profileImage,
+                                   @"thumbnail_image":@""
+                                   };
+            
+            NSData *infoObj = [NSJSONSerialization dataWithJSONObject:info options:0 error:nil];
+            NSString *infoStr = [[NSString alloc] initWithData:infoObj encoding:NSUTF8StringEncoding];
+            
+            const char* qresult = [infoStr UTF8String];
+            NativeApp* app = NativeApp::getInstance();
+            if(!app) return;
+            app->notifyLoginResult(true, qresult);
+        }
+        
+    }];
+    [connection start];
+}
+-(void)fetchKakaoUserInfo
+{
+    [KOSessionTask meTaskWithCompletionHandler:^(KOUser* result, NSError *error) {
+        
+        NSString *uuid = [result.ID stringValue];
+        
+        NSString *name = [result propertyForKey:@"nickname"];
+        if(name == nil) name = @"";
+        
+        NSString *email = result.email;
+        if(email == nil) email = @"";
+        
+        NSString *profileImage = [result propertyForKey:@"profile_image"];
+        if(profileImage == nil) profileImage = @"";
+        
+        NSString *thumbnailImage = [result propertyForKey:@"thumbnail.image"];
+        if(thumbnailImage == nil) thumbnailImage = @"";
+        
+        NSDictionary* info = @{
+                               @"id":uuid,
+                               @"is_logined":@0,
+                               @"nickname":name,
+                               @"email":email,
+                               @"profile_image":profileImage,
+                               @"thumbnail_image":thumbnailImage
+                               };
+        
+        NSData *infoObj = [NSJSONSerialization dataWithJSONObject:info options:0 error:nil];
+        NSString *infoStr = [[NSString alloc] initWithData:infoObj encoding:NSUTF8StringEncoding];
+        
+        const char* qresult = [infoStr UTF8String];
+        NativeApp* app = NativeApp::getInstance();
+        if(!app) return;
+        app->notifyLoginResult(true, qresult);
+    }];
+}
 @end
 
 @implementation QIOSApplicationDelegate (AppDelegate)
@@ -30,61 +125,25 @@ void NativeApp::joinKakao()
 }
 void NativeApp::loginKakao()
 {
-    [[KOSession sharedSession] close];
+    SDKTask *sdk = [SDKTask alloc];
+    if([KOSession sharedSession].accessToken != nil)
+    {
+        [sdk fetchKakaoUserInfo];
+        return;
+    }
     
+    [[KOSession sharedSession] close];
     [[KOSession sharedSession] openWithCompletionHandler:^(NSError *error) {
-       
-        if([KOSession sharedSession].accessToken != nullptr)
-        {
-            [KOSessionTask meTaskWithCompletionHandler:^(KOUser* result, NSError *error) {
-                NSString *uuid = [result.ID stringValue];
-                
-                NSString *name = [result propertyForKey:@"nickname"];
-                if(name == nil) name = @"";
-                
-                NSString *email = result.email;
-                if(email == nil) email = @"";
-                
-                NSString *profileImage = [result propertyForKey:@"profile_image"];
-                if(profileImage == nil) profileImage = @"";
-                
-                NSString *thumbnailImage = [result propertyForKey:@"thumbnail.image"];
-                if(thumbnailImage == nil) thumbnailImage = @"";
 
-                NSDictionary* info = @{
-                        @"id":uuid,
-                        @"is_logined":@NO,
-                        @"nickname":name,
-                        @"email":email,
-                        @"profile_image":profileImage,
-                        @"thumbnail_image":thumbnailImage,
-                        @"error_message":error.localizedDescription
-                };
-                
-                NSData *infoObj = [NSJSONSerialization dataWithJSONObject:info options:0 error:nil];
-                NSString *infoStr = [[NSString alloc] initWithData:infoObj encoding:NSUTF8StringEncoding];
-
-                NativeApp* app = NativeApp::getInstance();
-                if(app)
-                {
-                    const char* qresult = [infoStr UTF8String];
-                    app->notifyLoginResult(true, qresult);
-                }
-            }];
-        }
-        
         if([[KOSession sharedSession] isOpen]) {
             //login success
             NSLog(@"login succeed.");
+            [sdk fetchKakaoUserInfo];
             
         } else {
             //failed
             NSLog(@"login failed.");
-            NativeApp* app = NativeApp::getInstance();
-            if(app){
-                app = NativeApp::getInstance();
-                app->notifyLogoutResult(true);
-            }
+            notifyLogoutResult(true);
         }
         
     } authType:(KOAuthType)KOAuthTypeTalk, nil];
@@ -92,14 +151,11 @@ void NativeApp::loginKakao()
 
 void NativeApp::withdrawKakao()
 {
+//    logoutKakao();
     [KOSessionTask unlinkTaskWithCompletionHandler:^(BOOL success, NSError *error) {
         if(success) {
             NSLog(@"app disconnection success.");
-            NativeApp* app = NativeApp::getInstance();
-            if(app){
-                app = NativeApp::getInstance();
-                app->notifyWithdrawResult(true);
-            }
+            notifyWithdrawResult(true);
         } else {
             NSLog(@"app disconnection failed.");
         }
@@ -112,11 +168,7 @@ void NativeApp::logoutKakao()
         if (success) {
             // logout success.
             NSLog(@"logout success.");
-            NativeApp* app = NativeApp::getInstance();
-            if(app){
-                app = NativeApp::getInstance();
-                app->notifyLogoutResult(true);
-            }
+            notifyLogoutResult(true);
         } else {
             // failed
             NSLog(@"failed to logout.");
@@ -126,30 +178,87 @@ void NativeApp::logoutKakao()
 
 void NativeApp::loginFacebook()
 {
+    SDKTask *sdk = [SDKTask alloc];
+    if([FBSDKAccessToken currentAccessToken] != nil)
+    {
+        [sdk fetchFacebookUserInfo];
+        return;
+    }
     
+    UIViewController *qCtrl = [[[UIApplication sharedApplication] keyWindow]rootViewController];
+    FBSDKLoginManager* login = [[FBSDKLoginManager alloc] init];
+    [login logInWithReadPermissions:@[@"public_profile", @"email"] fromViewController:qCtrl
+        handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+         
+            NSMutableDictionary *info = [NSMutableDictionary dictionary];
+            [info setObject:@0 forKey:@"is_logined"];
+            
+            if(error || result.isCancelled) {
+                
+                if(error)
+                    [info setObject:error.localizedDescription forKey:@"error_message"];
+                if(result.isCancelled)
+                    [info setObject:@"is cancelled." forKey:@"error_message"];
+                
+                NSString *infoStr = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:info options:0 error:nil]
+                                                          encoding:NSUTF8StringEncoding];
+                notifyLoginResult(false, [infoStr UTF8String]);
+                
+            } else {
+                [sdk fetchFacebookUserInfo];
+            }
+     }];
 }
+
+
 
 void NativeApp::logoutFacebook()
 {
-    
+    FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
+    [loginManager logOut];
+    notifyLogoutResult(true);
 }
 
 void NativeApp::withdrawFacebook()
 {
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me/permissions"
+                                       parameters:nil
+                                       HTTPMethod:@"DELETE"]
     
+     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+         if(result)
+         {
+             NSLog(@"withdraw facebook...");
+             notifyWithdrawResult(true);
+         } else {
+             NSLog(@"failed withdraw facebook...");
+         }
+     }];
+    
+
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     
     if ([KOSession isKakaoAccountLoginCallback:url]) {
         return [KOSession handleOpenURL:url];
     }
+    
+    return NO;
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
             options:(NSDictionary<NSString *,id> *)options {
+    
+    if([[FBSDKApplicationDelegate sharedInstance] application:application
+                                                      openURL:url
+                                            sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                                   annotation:options[UIApplicationOpenURLOptionsAnnotationKey]])
+        return NO;
     
     if ([KOSession isKakaoAccountLoginCallback:url]) {
         return [KOSession handleOpenURL:url];
@@ -157,25 +266,12 @@ void NativeApp::withdrawFacebook()
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     
-    UIViewController *qtController = [[[UIApplication sharedApplication] keyWindow]rootViewController];
-        [KOSession sharedSession].automaticPeriodicRefresh = YES;
-    // button position
-//    int xMargin = 30;
-//    int marginBottom = 25;
-//    CGFloat btnWidth = qtController.view.frame.size.width - xMargin * 2;
-//    int btnHeight = 42;
-//
-//    UIButton* kakaoLoginButton
-//    = [[KOLoginButton alloc] initWithFrame:CGRectMake(xMargin, qtController.view.frame.size.height-btnHeight-marginBottom, btnWidth, btnHeight)];
-//    kakaoLoginButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
-//
-//    [qtController.view addSubview:kakaoLoginButton];
-//
-//    [KOSession sharedSession].automaticPeriodicRefresh = YES;
     [KOSession sharedSession].clientSecret = @"fJhST4AaP9qg3rCU9c9THXGPveN2WsSc";
-    [self initializeRemoteNotification];    
+    
+    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    
+    [self initializeRemoteNotification];
     return YES;
 }
 
@@ -190,7 +286,7 @@ void NativeApp::withdrawFacebook()
                 [[UIApplication sharedApplication] registerForRemoteNotifications];
             } else {
                 /* WHEN WAS ABLED TO ENROLLE SUCCESSFULLY PUSH SERVICE, */
-
+                
             }
         }];
     } else {
@@ -224,15 +320,15 @@ void NativeApp::withdrawFacebook()
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler
 {
     NSLog(@"userInfo : %@", userInfo);
-
+    
     /* TO RECEIVE AT PAYLOAD, PLEASE USE THE FOLLOWING LINES
-           - NSDictionary* payload = [userInfo objectForKey:@"aps"];
-           - NSString *message = [payload objectForKey:@"alert"];
-           - NSString *soundName = [payload objectForKey:@"sound"]; */
-
+     - NSDictionary* payload = [userInfo objectForKey:@"aps"];
+     - NSString *message = [payload objectForKey:@"alert"];
+     - NSString *soundName = [payload objectForKey:@"sound"]; */
+    
     /* TO BOOL VALUE, USE LIKE THIS
-           - BOOL isShow = [[userInfo objectForKey:@"show"] boolValue]; */
-
+     - BOOL isShow = [[userInfo objectForKey:@"show"] boolValue]; */
+    
     int type = [[userInfo objectForKey:@"type"] intValue];
     NSLog(@"type : %d", type);
     
@@ -251,22 +347,22 @@ void NativeApp::withdrawFacebook()
         NSLog(@"FOREGROUND");
         completionHandler(UIBackgroundFetchResultNewData);
     }
-
-
+    
+    
     /* IF WANT TO ALERT USING VIEW, PLEASE USE THE FOLLOWING LINES
-            - UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ALERT" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            - [alert show]; */
-
+     - UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ALERT" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+     - [alert show]; */
+    
     /* YOU CAN SET NOTIFICATION OPTION USING THE FOLLOWING LINES
-            - UILocalNotification *notification = [[UILocalNotification alloc]init];
-            - notification.timeZone = [NSTimeZone systemTimeZone];
-            - notification.alertBody = message;
-            - [notification setSoundName:soundName];
-            - notification.soundName = UILocalNotificationDefaultSoundName;
-            - [[UIApplication sharedApplication] presentLocalNotificationNow:notification]; */
-
+     - UILocalNotification *notification = [[UILocalNotification alloc]init];
+     - notification.timeZone = [NSTimeZone systemTimeZone];
+     - notification.alertBody = message;
+     - [notification setSoundName:soundName];
+     - notification.soundName = UILocalNotificationDefaultSoundName;
+     - [[UIApplication sharedApplication] presentLocalNotificationNow:notification]; */
+    
     /* USE THE FOWLLONG LINE, IF YOU WANT TO USE VIBRATE OPTION
-            - AudioServicesPlayAlertSound(kSystemSoundID_Vibrate); */
+     - AudioServicesPlayAlertSound(kSystemSoundID_Vibrate); */
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {
@@ -280,7 +376,7 @@ void NativeApp::withdrawFacebook()
     NSLog(@"Remote notification : %@", notification.request.content.userInfo);
     int type = [[notification.request.content.userInfo objectForKey:@"type"] intValue];
     NSLog(@"type : %d", type);
-
+    
     /* FLOAT PUSH BANNER */
     completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionBadge);
 }
@@ -290,7 +386,7 @@ void NativeApp::withdrawFacebook()
     NSLog(@"Remote notification : %@", response.notification.request.content.userInfo);
     int type = [[response.notification.request.content.userInfo objectForKey:@"type"] intValue];
     NSLog(@"type : %d", type);
-//    completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionBadge);
+    //    completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionBadge);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -302,7 +398,7 @@ void NativeApp::withdrawFacebook()
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-       [KOSession handleDidEnterBackground];
+    [KOSession handleDidEnterBackground];
 }
 
 
@@ -313,13 +409,14 @@ void NativeApp::withdrawFacebook()
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [FBSDKAppEvents activateApp];
     [KOSession handleDidBecomeActive];
 }
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-
+    
 }
 
 

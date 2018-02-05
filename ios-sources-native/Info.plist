@@ -29,12 +29,26 @@
 			<string>ac.olei.testbed</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>fb607859879567841</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>ac.olei.testbed</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
 				<string>kakao19f154087dc99157a302510cbf2ba971</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>FacebookAppID</key>
+	<string>607859879567841</string>
+	<key>FacebookDisplayName</key>
+	<string>testbed</string>
 	<key>KAKAO_APP_KEY</key>
 	<string>19f154087dc99157a302510cbf2ba971</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -46,6 +60,10 @@
 		<string>kakaotalk-4.5.0</string>
 		<string>kakaostory-2.9.0</string>
 		<string>storylink</string>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

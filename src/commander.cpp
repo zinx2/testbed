@@ -67,7 +67,8 @@ void Commander::logoutFacebook()
 }
 void Commander::withdrawFacebook()
 {
-    logoutFacebook();
+    qDebug() << "WITHDRAW FACEBOOK ACCOUNT";
+    app->withdrawFacebook();
 }
 
 void Commander::onLoginSuccess(const char* result)

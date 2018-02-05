@@ -63,7 +63,12 @@ ios {
     #KAKAOTALK
     LIBS += -F$$PWD/ios-libraries/KakaoSDK \
             -framework KakaoOpenSDK
-    LIBS += -force_load ($$PWD/ios-libraries/KakaoSDK/KakaoOpenSDK.framework/KakaoOpenSDK)
+
+    #FACEBOOK
+    LIBS += -F$$PWD/ios-libraries/FacebookSDK \
+            -framework FBSDKCoreKit \
+            -framework FBSDKLoginKit \
+            -framework Bolts
 
 }
 
