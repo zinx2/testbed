@@ -5,7 +5,7 @@
 #include <QDir>
 #include "../src/native_app.h"
 
-QString NativeApp::getDeviceId() const
+QString NativeApp::getDeviceId()
 {
     QAndroidJniObject activity = QtAndroid::androidActivity();
     QAndroidJniObject result = activity.callObjectMethod<jstring>("getDeviceId");
@@ -19,6 +19,47 @@ QString NativeApp::getDeviceId() const
         return "";
     }
     return result.toString();
+}
+
+QString NativeApp::getAppVersion()
+{
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    QAndroidJniObject result = activity.callObjectMethod<jstring>("getAppVersion");
+
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck())
+    {
+        env->ExceptionDescribe();
+        env->ExceptionClear();
+        qCritical("Something Was Wrong!!");
+        return "";
+    }
+    return result.toString();
+}
+QString NativeApp::getPhoneNumber()
+{
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    QAndroidJniObject result = activity.callObjectMethod<jstring>("getPhoneNumber");
+
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck())
+    {
+        env->ExceptionDescribe();
+        env->ExceptionClear();
+        qCritical("Something Was Wrong!!");
+        return "";
+    }
+    return result.toString();
+}
+
+void NativeApp::invitePerson(QString senderId, QString message, QString url)
+{
+
+}
+
+void NativeApp::joinKakao()
+{
+
 }
 
 void NativeApp::loginKakao()

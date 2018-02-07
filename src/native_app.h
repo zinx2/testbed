@@ -26,13 +26,19 @@ public:
 	void logoutFacebook();
 	void withdrawFacebook();
 
+    void invitePerson(QString senderId, QString message, QString url);
+
+    QString getDeviceId();
+    QString getAppVersion();
+    QString getPhoneNumber();
+
     void notifyLoginResult(bool isSuccess, const char* result);
     void notifyLogoutResult(bool isSuccess);
     void notifyWithdrawResult(bool isSuccess);
     void notifyTokenInfo(bool isSuccess, const char* result);
 
-    public slots:
-    QString getDeviceId() const;
+
+
 
 signals:
 	void resumed();

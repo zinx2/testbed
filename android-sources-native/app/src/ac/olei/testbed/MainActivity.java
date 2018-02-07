@@ -102,6 +102,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -497,7 +498,7 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
         }
 
         requestedSNSType = LoginType.FACEBOOK;
-        List<String> permissionNeeds= Arrays.asList("user_photos", "email");
+        List<String> permissionNeeds= Arrays.asList(/*"user_photos", */"email");
         LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, permissionNeeds);
         LoginManager.getInstance().registerCallback(callbackManager, new
                 FacebookCallback<LoginResult>() {
@@ -565,8 +566,41 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
     public void logoutFacebook()
     {
         LoginManager.getInstance().logOut();
-        logoutFinished(true);
+
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        boolean isSuccess = true;
+        if(token != null)   /* failed to logout. */
+            isSuccess = false;
+
+        logoutFinished(isSuccess);
     }
+
+    public void withdrawFacebook()
+    {
+        /* make the API call */
+        new GraphRequest(
+            AccessToken.getCurrentAccessToken(),
+            "/me/permissions",
+            null,
+            HttpMethod.DELETE,
+            new GraphRequest.Callback() {
+                public void onCompleted(GraphResponse response) {
+
+                    try {
+                        boolean isSuccess = response.getJSONObject().getBoolean("success");
+                        withdrawFinished(isSuccess);
+
+                        if(isSuccess) /* when succeed to withdraw. */
+                            logoutFacebook();
+
+                    } catch (JSONException e) {
+                        Log.e("Facebook", "Error fetching JSON");
+                    }
+                }
+            }
+        ).executeAsync();
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -60,9 +60,21 @@ void NativeApp::notifyTokenInfo(bool isSuccess, const char* result)
 
 /* PC Version */
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-QString NativeApp::getDeviceId() const
+QString NativeApp::getDeviceId()
 {
     return "123456789011123";
+}
+QString  NativeApp::getAppVersion()
+{
+    return "1.0";
+}
+QString NativeApp::getPhoneNumber()
+{
+    return "01056667777";
+}
+void NativeApp::invitePerson(QString senderId, QString message, QString url)
+{
+
 }
 void NativeApp::joinKakao()
 {
