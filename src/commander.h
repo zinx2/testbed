@@ -25,6 +25,7 @@ public slots:
     void loginKakao();
     void logoutKakao();
     void withdrawKakao();
+    void inviteKakao();
 
 	void loginFacebook();
 	void logoutFacebook();
@@ -41,6 +42,9 @@ public slots:
 
     void onWithdrawSuccess();
     void onWithdrawFailed();
+
+    void onInviteSuccess();
+    void onInviteFailed();
 
 
 private:

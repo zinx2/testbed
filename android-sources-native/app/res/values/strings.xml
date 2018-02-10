@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">OLEI 테스트베드</string>
-
+    <string name="app_name_en">testbed</string>
     <string name="kakao_app_key">19f154087dc99157a302510cbf2ba971</string>
-
+    <string name="kakao_scheme">kakao19f154087dc99157a302510cbf2ba971</string>
+    <string name="kakaolink_host">kakaolink</string>
     <string name="facebook_app_id">393542747734419</string>
     <string name="fb_login_protocol_scheme">fb393542747734419</string>
 

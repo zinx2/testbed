@@ -64,8 +64,22 @@ void Java_ac_olei_testbed_MainActivity_withdrawFinished(JNIEnv *env, jobject obj
     }
 }
 
+
+void Java_ac_olei_testbed_MainActivity_inviteFinished(JNIEnv *env, jobject obj, jboolean isSuccess)
+{
+    Q_UNUSED(env)
+    Q_UNUSED(obj)
+
+    NativeApp* app = NativeApp::getInstance();
+    if(app){
+        app = NativeApp::getInstance();
+        app->notifyInviteResult(isSuccess);
+    }
+}
+
 void Java_ac_olei_testbed_MainActivity_notifyTokenInfo(JNIEnv *env, jobject obj, jboolean isSuccess, jstring result)
 {
+    Q_UNUSED(env)
     Q_UNUSED(obj)
 
     NativeApp* app = NativeApp::getInstance();

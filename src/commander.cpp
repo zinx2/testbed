@@ -14,6 +14,8 @@ Commander::Commander(QObject *parent) : QObject(parent)
     connect(app, SIGNAL(logoutFailed()), this, SLOT(onLogoutFailed()));
     connect(app, SIGNAL(withdrawSuccess()), this, SLOT(onWithdrawSuccess()));
     connect(app, SIGNAL(withdrawFailed()), this, SLOT(onWithdrawFailed()));
+    connect(app, SIGNAL(inviteSuccess()), this, SLOT(onInviteSuccess()));
+    connect(app, SIGNAL(inviteFailed()), this, SLOT(onInviteFailed()));
 
     m_settings = Settings::getInstance();
 //    connect(app, SIGNAL(tokenInfoSuccess(QString)), this, SLOT(onTokenGetSuccess(QString)));
@@ -52,6 +54,12 @@ void Commander::withdrawKakao()
 {
     qDebug() << "WITHDRAW USING SNS";
     app->withdrawKakao();
+}
+
+void Commander::inviteKakao()
+{
+    qDebug() << "INVITE USING SNS";
+    app->inviteKakao("", "", "", "", "");
 }
 
 void Commander::loginFacebook()
@@ -150,4 +158,14 @@ void Commander::onWithdrawSuccess()
 void Commander::onWithdrawFailed()
 {
     qDebug() << "WITHDRAW FAILED";
+}
+
+void Commander::onInviteSuccess()
+{
+    qDebug() << "INVITE SUCCESS";
+}
+
+void Commander::onInviteFailed()
+{
+    qDebug() << "INVITE FAILED";
 }

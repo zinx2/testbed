@@ -92,8 +92,13 @@ import com.kakao.usermgmt.callback.UnLinkResponseCallback;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.kakaolink.AppActionBuilder;
+import com.kakao.kakaolink.AppActionInfoBuilder;
+import com.kakao.kakaolink.KakaoLink;
+import com.kakao.kakaolink.KakaoTalkLinkMessageBuilder;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
+import com.kakao.util.KakaoParameterException;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -122,6 +127,7 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
     private native void loginFinished(boolean isSuccess, String result);
     private native void logoutFinished(boolean isSuccess);
     private native void withdrawFinished(boolean isSuccess);
+    private native void inviteFinished(boolean isSuccess);
     private native void notifyTokenInfo(boolean isSuccess, String result);
 
 //    public static final String TAG = "MainActivity";
@@ -360,6 +366,37 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
                 withdrawFinished(true);
             }
         });
+    }
+
+    private KakaoLink kLink = null;
+    private KakaoTalkLinkMessageBuilder ktMsgBuilder = null;
+    public void inviteKakao(String senderId, String image, String title, String desc, String link)
+    {
+        if(kLink == null || ktMsgBuilder == null)
+        {
+          try {
+            kLink = KakaoLink.getKakaoLink(getApplicationContext());
+            ktMsgBuilder = kLink.createKakaoTalkLinkMessageBuilder();
+          } catch (KakaoParameterException e) {
+            e.printStackTrace();
+            inviteFinished(false);
+          }
+        }
+        if(ktMsgBuilder != null)
+        {
+            try {
+                ktMsgBuilder.addImage("http://vlee.kr/wp-content/uploads/2017/03/%EB%B0%A4%ED%8E%B8%EC%A7%80_%EB%B9%84%ED%95%98%EC%9D%B8%EB%93%9C_18.jpg", 150, 150);
+                ktMsgBuilder.addText("아이유가 참 예쁘죠.");
+                ktMsgBuilder.addAppButton("앱 설치로 이동");
+                ktMsgBuilder.addAppLink(getString(R.string.app_name_en),
+                    new AppActionBuilder().addActionInfo(AppActionInfoBuilder.createAndroidActionInfoBuilder().build()).build());
+                kLink.sendMessage(ktMsgBuilder, this);
+                inviteFinished(true);
+            } catch (KakaoParameterException e) {
+                e.printStackTrace();
+                inviteFinished(false);
+            }
+        }
     }
 
     private class SessionCallback implements ISessionCallback {

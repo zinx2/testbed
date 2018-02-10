@@ -49,6 +49,14 @@ void NativeApp::notifyWithdrawResult(bool isSuccess)
         emit withdrawFailed();
 }
 
+void NativeApp::notifyInviteResult(bool isSuccess)
+{
+    if(isSuccess)
+        emit inviteSuccess();
+    else
+        emit inviteFailed();
+}
+
 void NativeApp::notifyTokenInfo(bool isSuccess, const char* result)
 {
     if(isSuccess)
@@ -56,7 +64,6 @@ void NativeApp::notifyTokenInfo(bool isSuccess, const char* result)
     else
         emit tokenInfoFailed(result);
 }
-
 
 /* PC Version */
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
@@ -92,6 +99,10 @@ void NativeApp::withdrawKakao()
 {
     qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
 }
+void NativeApp::inviteKakao(QString senderId, QString image, QString title, QString desc, QString link)
+{
+    qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
+}
 void NativeApp::loginFacebook()
 {
 	qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
@@ -103,6 +114,10 @@ void NativeApp::logoutFacebook()
 void NativeApp::withdrawFacebook()
 {
 	qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
+}
+void NativeApp::inviteFacebook(QString senderId, QString image, QString title, QString desc, QString link)
+{
+    qDebug() << "THIS EVENT WAS INVOKED AT PC VERSION. HAS NO EVENT.";
 }
 #endif
 

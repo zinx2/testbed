@@ -101,6 +101,26 @@ void NativeApp::withdrawKakao()
     }
 }
 
+void NativeApp::inviteKakao(QString senderId, QString image, QString title, QString desc, QString link)
+{
+    QAndroidJniObject idStr = QAndroidJniObject::fromString(senderId);
+    QAndroidJniObject imageStr = QAndroidJniObject::fromString(image);
+    QAndroidJniObject titleStr = QAndroidJniObject::fromString(title);
+    QAndroidJniObject descStr = QAndroidJniObject::fromString(desc);
+    QAndroidJniObject linkStr = QAndroidJniObject::fromString(link);
+
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    activity.callMethod<void>("inviteKakao", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
+                              idStr.object<jstring>(), imageStr.object<jstring>(), titleStr.object<jstring>(), descStr.object<jstring>(), linkStr.object<jstring>());
+
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck())
+    {
+      env->ExceptionDescribe();
+      env->ExceptionClear();
+    }
+}
+
 void NativeApp::loginFacebook()
 {
     QAndroidJniObject activity = QtAndroid::androidActivity();
@@ -139,3 +159,24 @@ void NativeApp::withdrawFacebook()
       env->ExceptionClear();
     }
 }
+
+void NativeApp::inviteFacebook(QString senderId, QString image, QString title, QString desc, QString link)
+{
+    QAndroidJniObject idStr = QAndroidJniObject::fromString(senderId);
+    QAndroidJniObject imageStr = QAndroidJniObject::fromString(image);
+    QAndroidJniObject titleStr = QAndroidJniObject::fromString(title);
+    QAndroidJniObject descStr = QAndroidJniObject::fromString(desc);
+    QAndroidJniObject linkStr = QAndroidJniObject::fromString(link);
+
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    activity.callMethod<void>("showEmail", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
+                              idStr.object<jstring>(), imageStr.object<jstring>(), titleStr.object<jstring>(), descStr.object<jstring>(), linkStr.object<jstring>());
+
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck())
+    {
+      env->ExceptionDescribe();
+      env->ExceptionClear();
+    }
+}
+

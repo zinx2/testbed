@@ -21,10 +21,12 @@ public:
     void loginKakao();
     void logoutKakao();
     void withdrawKakao();
+    void inviteKakao(QString senderId, QString image, QString title, QString desc, QString link);
 
 	void loginFacebook();
 	void logoutFacebook();
 	void withdrawFacebook();
+    void inviteFacebook(QString senderId, QString image, QString title, QString desc, QString link);
 
     void invitePerson(QString senderId, QString message, QString url);
 
@@ -35,6 +37,7 @@ public:
     void notifyLoginResult(bool isSuccess, const char* result);
     void notifyLogoutResult(bool isSuccess);
     void notifyWithdrawResult(bool isSuccess);
+    void notifyInviteResult(bool isSuccess);
     void notifyTokenInfo(bool isSuccess, const char* result);
 
 
@@ -49,6 +52,8 @@ signals:
     void logoutFailed();
     void withdrawSuccess();
     void withdrawFailed();
+    void inviteSuccess();
+    void inviteFailed();
     void tokenInfoSuccess(const char* result);
     void tokenInfoFailed(const char* result);
 
