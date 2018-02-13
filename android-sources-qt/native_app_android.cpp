@@ -169,7 +169,7 @@ void NativeApp::inviteFacebook(QString senderId, QString image, QString title, Q
     QAndroidJniObject linkStr = QAndroidJniObject::fromString(link);
 
     QAndroidJniObject activity = QtAndroid::androidActivity();
-    activity.callMethod<void>("showEmail", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
+    activity.callMethod<void>("inviteFacebook", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
                               idStr.object<jstring>(), imageStr.object<jstring>(), titleStr.object<jstring>(), descStr.object<jstring>(), linkStr.object<jstring>());
 
     QAndroidJniEnvironment env;

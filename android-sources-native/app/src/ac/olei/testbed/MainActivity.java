@@ -73,6 +73,8 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import android.net.Uri;
+
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -112,6 +114,10 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.Profile;
+import com.facebook.share.ShareApi;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -535,7 +541,7 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
         }
 
         requestedSNSType = LoginType.FACEBOOK;
-        List<String> permissionNeeds= Arrays.asList(/*"user_photos", */"email");
+        List<String> permissionNeeds= Arrays.asList(/*"user_photos, publish_actions", */"email, ");
         LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, permissionNeeds);
         LoginManager.getInstance().registerCallback(callbackManager, new
                 FacebookCallback<LoginResult>() {
@@ -638,6 +644,55 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
         ).executeAsync();
     }
 
+    public void inviteFacebook(String senderId, String image, String title, String desc, String link) {
+
+        ShareLinkContent content = new ShareLinkContent.Builder()
+            .setContentUrl(Uri.parse("http://www.naver.com"))
+            .setQuote("Connect on a global scale.")
+//            .setContentTitle("TEST")
+//            .setImageUrl(Uri.parse("http://vlee.kr/wp-content/uploads/2017/03/%EB%B0%A4%ED%8E%B8%EC%A7%80_%EB%B9%84%ED%95%98%EC%9D%B8%EB%93%9C_18.jpg"))
+//            .setContentDescription("TEST...")
+            .build();
+
+//        ShareApi.share(content, new FacebookCallback<Sharer.Result>()
+//        {
+//            @Override
+//            public void onSuccess(Sharer.Result result)
+//            {
+//                Log.d("[NATIVE_FACEBOOK]", "SHARE SUCCESS.");
+//            }
+
+//            @Override
+//            public void onCancel()
+//            {
+//                Log.d("[NATIVE_FACEBOOK]", "SHARE CANCEL.");
+//            }
+
+//            @Override
+//            public void onError(FacebookException e)
+//            {
+//                Log.d("[NATIVE_FACEBOOK]", "SHARE ERROR.");
+//            }
+//         });
+        ShareDialog shareDialog = new ShareDialog(this);
+        shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
+    }
+
+    public void inviteSMS(String message)
+    {
+      Intent intent = new Intent(Intent.ACTION_VIEW);
+      intent.putExtra("sms_body", message);
+      intent.setType("vnd.android-dir/mms-sms");
+      startActivity(intent);
+    }
+
+    public void inviteEmail(String message)
+    {
+      Intent intent = new Intent(Intent.ACTION_SEND);
+      intent.putExtra(Intent.EXTRA_TEXT, message);
+      intent.setType("message/rfc822");
+      startActivity(Intent.createChooser(intent, "Email"));
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

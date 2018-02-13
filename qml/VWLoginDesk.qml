@@ -132,6 +132,29 @@ Rectangle {
         {
             sourceWidth: parent.width
             sourceHeight: R.height_button_middle
+            btnName: "페이스북 공유하기"
+            rectColor: R.color_kut_lightBlue
+            textColor: "white"
+            onClicked:
+            {
+                /* DESIGN LOGIC */
+                if(opt.ds)
+                {
+
+
+
+                    return; /* PLEASE DON'T REMVOE! */
+                }
+
+                /* NOT DESIGN LOGIC */
+                cmd.inviteFacebook();
+            }
+        }
+
+        CPButton
+        {
+            sourceWidth: parent.width
+            sourceHeight: R.height_button_middle
             btnName: "페이스북 로그인"
             rectColor: R.color_kut_lightBlue
             textColor: "white"

@@ -30,6 +30,7 @@ public slots:
 	void loginFacebook();
 	void logoutFacebook();
 	void withdrawFacebook();
+    void inviteFacebook();
 
     void onLoginSuccess(const char* result);
     void onLoginFailed(const char* result);

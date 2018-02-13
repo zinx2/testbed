@@ -39,49 +39,55 @@ void Commander::joinKakao()
 
 void Commander::loginKakao()
 {
-    qDebug() << "LOGIN USING SNS";    
+    qDebug() << "[KAKAO] LOGIN.";
     m_settings->setSnsType(SNS_TYPE::KAKAO);
     app->loginKakao();
 }
 
 void Commander::logoutKakao()
 {
-    qDebug() << "LOGOUT USING SNS";
+    qDebug() << "[KAKAO] LOGOUT.";
     app->logoutKakao();
 }
 
 void Commander::withdrawKakao()
 {
-    qDebug() << "WITHDRAW USING SNS";
+    qDebug() << "[KAKAO] WITHDRAW ACCOUNT.";
     app->withdrawKakao();
 }
 
 void Commander::inviteKakao()
 {
-    qDebug() << "INVITE USING SNS";
+    qDebug() << "[KAKAO] INVITE FRIEND.";
     app->inviteKakao("", "", "", "", "");
 }
 
 void Commander::loginFacebook()
 {
-	qDebug() << "LOGIN USING SNS";
+    qDebug() << "[FACEBOOK] LOGIN.";
 	m_settings->setSnsType(SNS_TYPE::FACEBOOK);
 	app->loginFacebook();
 }
 void Commander::logoutFacebook()
 {
-	qDebug() << "LOGOUT USING SNS";
+    qDebug() << "[FACEBOOK] LOGOUT.";
 	app->logoutFacebook();
 }
 void Commander::withdrawFacebook()
 {
-    qDebug() << "WITHDRAW FACEBOOK ACCOUNT";
+    qDebug() << "[FACEBOOK] WITHDRAW ACCOUNT.";
     app->withdrawFacebook();
+}
+
+void Commander::inviteFacebook()
+{
+    qDebug() << "[FACEBOOK] INVITE FRIEND.";
+    app->inviteFacebook("", "", "", "", "");
 }
 
 void Commander::onLoginSuccess(const char* result)
 {
-	qDebug() << "Commander::onLoginSuccess >> ";
+    qDebug() << "[RESULT] LOGIN SUCCESS.";
     qDebug() << result;
 
     QString qresult(result);
@@ -101,7 +107,7 @@ void Commander::onLoginSuccess(const char* result)
 
 void Commander::onLoginFailed(const char* result)
 {
-    qDebug() << "LOGIN FAILED";
+    qDebug() << "[RESULT] LOGIN FAILED.";
     qDebug() << result;
 
     m_settings->setLogined(false);
@@ -120,7 +126,7 @@ void Commander::onLoginFailed(const char* result)
 
 void Commander::onLogoutSuccess()
 {
-    qDebug() << "LOGOUT SUCCESS";    
+    qDebug() << "[RESULT] LOGOUT SUCCESS.";
     m_settings->setLogined(false);
     m_settings->setSnsType(SNS_TYPE::NONE);
     m_settings->setNickName("");
@@ -131,7 +137,7 @@ void Commander::onLogoutSuccess()
 
 void Commander::onLogoutFailed()
 {
-    qDebug() << "LOGOUT FAILED";
+    qDebug() << "[RESULT] LOGOUT FAILED.";
 }
 
 void Commander::onTokenGetSuccess(const char* result)
@@ -146,7 +152,7 @@ void Commander::onTokenGetFailed(const char* result)
 
 void Commander::onWithdrawSuccess()
 {
-    qDebug() << "WITHDRAW SUCCESS";
+    qDebug() << "[RESULT] WITHDRAW SUCCESS.";
     m_settings->setLogined(false);
     m_settings->setSnsType(SNS_TYPE::NONE);    
     m_settings->setNickName("");
@@ -157,15 +163,15 @@ void Commander::onWithdrawSuccess()
 
 void Commander::onWithdrawFailed()
 {
-    qDebug() << "WITHDRAW FAILED";
+    qDebug() << "[RESULT] WITHDRAW FAILED.";
 }
 
 void Commander::onInviteSuccess()
 {
-    qDebug() << "INVITE SUCCESS";
+    qDebug() << "[RESULT] INVITE SUCCESS.";
 }
 
 void Commander::onInviteFailed()
 {
-    qDebug() << "INVITE FAILED";
+    qDebug() << "[RESULT] INVITE FAILED.";
 }
