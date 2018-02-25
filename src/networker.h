@@ -50,6 +50,6 @@ private:
 	QMutex m_mtx;
 	QUrlQuery m_queries;
 
-	const QString DOMAIN_NAME = "http://35.194.231.178:8080/";
+    const QString DOMAIN_NAME = "http://35.194.167.74:8080/";
 };
 

@@ -467,7 +467,8 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
                     String result = "";
                     JSONObject jUserProfile = new JSONObject();
                     try {
-                        jUserProfile.put("is_logined", false); /* 카카오톡은 매번 이쪽으로 진입. 따라서, false */
+//                        jUserProfile.put("is_logined", false); /* 카카오톡은 매번 이쪽으로 진입. 따라서, false */
+                        jUserProfile.put("is_logined", true);
                         jUserProfile.put("nickname", userProfile.getNickname());
                         jUserProfile.put("email", userProfile.getEmail());
                         jUserProfile.put("thumbnail_image", userProfile.getThumbnailImagePath());

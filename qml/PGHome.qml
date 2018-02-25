@@ -7,8 +7,14 @@ Paper {
     id: mainView
     visibleBackBtn: false
     visibleSearchBtn: false
-    //    width: R.design_size_width
-    //    height: R.design_size_height
+
+    property bool logouted : opt.ds ? false : !settings.logined
+    onLogoutedChanged: {
+        if(logouted) {
+            stackView.clear();
+            stackView.push(Qt.createComponent(R.view_file_loginDesk), { });
+        }
+    }
 
     ScrollView
     {
@@ -16,13 +22,104 @@ Paper {
         clip: true
         width: parent.width
         height: parent.height - R.height_titlaBar - 1
-         y: R.height_titlaBar + 1
+        y: R.height_titlaBar + 1
 
         Column
         {
             width: scrollView.width
             height: scrollView.height
             spacing: 1
+            CPButton
+            {
+                sourceWidth: parent.width
+                sourceHeight: R.height_button_middle
+                btnName: "카카오 로그아웃"
+                rectColor: R.color_buttonColor001
+                textColor: "white"
+                onClicked:
+                {
+                    /* DESIGN LOGIC */
+                    if(opt.ds)
+                    {
+
+
+
+                        return; /* PLEASE DON'T REMVOE! */
+                    }
+
+                    /* NOT DESIGN LOGIC */
+                    cmd.logoutKakao();
+                }
+            }
+
+            CPButton
+            {
+                sourceWidth: parent.width
+                sourceHeight: R.height_button_middle
+                btnName: "카카오 연결해제"
+                rectColor: R.color_buttonColor001
+                textColor: "white"
+                onClicked:
+                {
+                    /* DESIGN LOGIC */
+                    if(opt.ds)
+                    {
+
+
+
+                        return; /* PLEASE DON'T REMVOE! */
+                    }
+
+                    /* NOT DESIGN LOGIC */
+                    cmd.withdrawKakao();
+                }
+            }
+
+            CPButton
+            {
+                sourceWidth: parent.width
+                sourceHeight: R.height_button_middle
+                btnName: "페이스북 로그아웃"
+                rectColor: R.color_buttonColor001
+                textColor: "white"
+                onClicked:
+                {
+                    /* DESIGN LOGIC */
+                    if(opt.ds)
+                    {
+
+
+
+                        return; /* PLEASE DON'T REMVOE! */
+                    }
+
+                    /* NOT DESIGN LOGIC */
+                    cmd.logoutFacebook();
+                }
+            }
+
+            CPButton
+            {
+                sourceWidth: parent.width
+                sourceHeight: R.height_button_middle
+                btnName: "페이스북 연결해제"
+                rectColor: R.color_buttonColor001
+                textColor: "white"
+                onClicked:
+                {
+                    /* DESIGN LOGIC */
+                    if(opt.ds)
+                    {
+
+
+
+                        return; /* PLEASE DON'T REMVOE! */
+                    }
+
+                    /* NOT DESIGN LOGIC */
+                    cmd.withdrawFacebook();
+                }
+            }
 
             CPImage { source: "image://async/img001.jpg"; height : R.dp(500); width: parent.width}
             CPImage { source: "image://async/img002.jpg"; height : R.dp(500); width: parent.width}
@@ -116,7 +213,7 @@ Paper {
                 textColor: "white"
                 fontSize: R.pt(15)
                 onClicked: {
-    //                nt.title();
+                    //                nt.title();
                     wk.getDemoAll();
                 }
             }

@@ -19,15 +19,32 @@ ApplicationWindow {
         console.log(R.design_size_width)
     }
 
+
+
     StackView
     {
         id: stackView
         anchors.fill: parent
         visible: true
 
-        initialItem: VWLoginDesk
+        initialItem: PGLoginDesk
         {
-
+            width: opt.ds ? R.design_size_width : parent.width
+            height: opt.ds ? R.design_size_height : parent.height
+            onLoginedChanged: {
+                /* When user logined. */
+                if(logined) {
+                    stackView.clear();
+                    stackView.push(Qt.createComponent(R.view_file_home), { });
+                }
+            }
+            Component.onCompleted: {
+                /* When Logined... AutoLogin. */
+                if(logined) {
+                    stackView.clear();
+                    stackView.push(Qt.createComponent(R.view_file_home), { });
+                }
+            }
         }
     }
 
@@ -37,19 +54,9 @@ ApplicationWindow {
         z: 99999
     }
 
-    Rectangle
+    PGSplash
     {
         id: splashView
-        anchors.fill: parent
-        visible: true
-        Image
-        {
-            anchors.centerIn: parent
-            width: R.dp(184)
-            height: R.dp(349)
-            source: R.image("splash.png")
-        }
-        Behavior on opacity { NumberAnimation { duration: 1000 ;easing.type: Easing.InQuad}  }
     }
 
     Timer

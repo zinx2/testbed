@@ -12,13 +12,14 @@
         <file>qml/CPToast.qml</file>
         <file>qml/CPSearchBar.qml</file>
         <file>qml/CPTextField.qml</file>
-        <file>qml/VWDesc.qml</file>
         <file>qml/CPImageView.qml</file>
         <file>qml/CPImage.qml</file>
-        <file>qml/VWLoginEmail.qml</file>
-        <file>qml/VWLoginDesk.qml</file>
-        <file>qml/VWHome.qml</file>
-        <file>qml/VWJoinDesk.qml</file>
-        <file>qml/VWJoinEmail.qml</file>
+        <file>qml/PGLoginDesk.qml</file>
+        <file>qml/PGHome.qml</file>
+        <file>qml/PGSplash.qml</file>
+        <file>qml/PGJoinEmail.qml</file>
+        <file>qml/PGJoinDesk.qml</file>
+        <file>qml/PGLoginEmail.qml</file>
+        <file>qml/PGJoinSNS.qml</file>
     </qresource>
 </RCC>

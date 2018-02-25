@@ -13,8 +13,10 @@ var height_button_middle = dp(144);
 var color_appTitlebar = "#272e36"
 var color_appTitleText = "#ffffff"
 var color_buttonPressed = "#44000000"
+
 var color_bgColor001 = "#e4e5e9"
-var color_buttonColor001 = "#272e36"
+var color_buttonColor001 = "#5460e0"
+
 var color_orange = "#f6712a"
 var color_toast = "#656565"
 
@@ -52,9 +54,10 @@ var design_size_height = di.height();
 
 var view_file_popup = "CPPopup.qml"
 
-var view_file_home = "VWHome.qml"
-var view_file_joinDesk = "VWJoinDesk.qml"
-var view_file_joinEmail = "VWJoinEmail.qml"
-var view_file_loginEmail = "VWLoginEmail.qml"
+var view_file_home = "PGHome.qml"
+var view_file_joinDesk = "PGJoinDesk.qml"
+var view_file_joinEmail = "PGJoinEmail.qml"
+var view_file_loginEmail = "PGLoginEmail.qml"
+var view_file_loginDesk = "PGLoginDesk.qml"
 var view_file_desc = "VWDesc.qml"
 
