@@ -23,7 +23,7 @@ private:
 	QNetworkReply* m_netReply;
 
 	QByteArray m_binary;
-	const QString DOMAIN_NAME = "http://35.194.231.178:8080/";
+    const QString DOMAIN_NAME = "http://192.168.35.177:8080/";
 
 	QMutex* m_mtx;
 	bool m_notFound = false;

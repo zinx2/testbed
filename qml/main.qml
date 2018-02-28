@@ -1,5 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick 2.9
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 import "Resources.js" as R
@@ -12,14 +12,17 @@ ApplicationWindow {
     title: qsTr("Triz 40 Cartoon")
 
 
+    PGDrawer {
+        width: appWindow.width * 2 / 3
+        height: appWindow.height
+    }
+
     Component.onCompleted: {
 
         //toast("본 앱에 포함된 카툰의 저작권은 GS인터비전에 있으니 무단 복제를 금합니다.");
         fadeoutTimer.running = true;
         console.log(R.design_size_width)
     }
-
-
 
     StackView
     {

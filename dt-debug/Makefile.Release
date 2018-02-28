@@ -187,23 +187,24 @@ release/qrc_qml.cpp: ../qml.qrc \
 		../qtquickcontrols2.conf \
 		../qml/CPImage.qml \
 		../qml/CPButton.qml \
+		../qml/PGHome.qml \
 		../qml/CPImageView.qml \
 		../qml/CPPopup.qml \
+		../qml/PGLoginDesk.qml \
 		../qml/CPText.qml \
 		../qml/CPTextField.qml \
-		../qml/VWJoinEmail.qml \
+		../qml/PGJoinEmail.qml \
+		../qml/PGJoinDesk.qml \
 		../qml/Resources.js \
 		../qml/CPToast.qml \
-		../qml/VWDesc.qml \
+		../qml/PGJoinSNS.qml \
+		../qml/PGSplash.qml \
 		../qml/LYMargin.qml \
-		../qml/VWHome.qml \
 		../qml/CPSearchBar.qml \
 		../qml/Paper.qml \
 		../qml/CPListView.qml \
-		../qml/VWLoginEmail.qml \
 		../qml/main.qml \
-		../qml/VWLoginDesk.qml \
-		../qml/VWJoinDesk.qml
+		../qml/PGLoginEmail.qml
 	C:\Qt\5.9.2\mingw53_32\bin\rcc.exe -name qml ..\qml.qrc -o release\qrc_qml.cpp
 
 release/qrc_img.cpp: ../img.qrc \
@@ -1256,7 +1257,22 @@ release/native_app.o: ../src/native_app.cpp ../src/native_app.h \
 		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qmetatype.h \
 		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qvarlengtharray.h \
 		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qcontainerfwd.h \
-		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qobject_impl.h
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qobject_impl.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/QDebug \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qhash.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qmap.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qiodevice.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qshareddata.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qvector.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qpoint.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qset.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qsharedpointer.h \
+		../../../../Qt/5.9.2/mingw53_32/include/QtCore/qsharedpointer_impl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\native_app.o ..\src\native_app.cpp
 
 release/display_information.o: ../src/display_information.cpp ../src/display_information.h \

@@ -21,5 +21,10 @@
         <file>qml/PGJoinDesk.qml</file>
         <file>qml/PGLoginEmail.qml</file>
         <file>qml/PGJoinSNS.qml</file>
+        <file>qml/PGDrawer.qml</file>
+        <file>qml/PGTab1.qml</file>
+        <file>qml/PGTab2.qml</file>
+        <file>qml/PGTab3.qml</file>
+        <file>qml/PGTab4.qml</file>
     </qresource>
 </RCC>
