@@ -1,16 +1,17 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import "Resources.js" as R
 
 Paper {
-    titleText: "이메일 로그인"
-
     id: mainView
-    visibleBackBtn: true
     visibleSearchBtn: false
+    titleText: "설정"
 
     onEvtBack:
     {
-        userStackView.pop();
+        homeStackView.pop();
+        if(homeStackView.depth === 1)
+            md.setBlockedDrawer(false);
     }
 }

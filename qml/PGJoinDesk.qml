@@ -35,7 +35,7 @@ Paper {
                 }
 
                 /* NOT DESIGN LOGIC */
-                stackView.push(Qt.createComponent(R.view_file_joinEmail), { });
+                userStackView.push(Qt.createComponent(R.view_file_joinEmail), { });
             }
         }
 
@@ -88,7 +88,7 @@ Paper {
 
     onEvtBack:
     {
-        stackView.pop();
+        userStackView.pop();
     }
 
 }

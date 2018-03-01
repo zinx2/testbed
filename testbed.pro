@@ -87,7 +87,8 @@ DISTFILES += \
     img/splash.jpg \
     android-sources-native/app/src/ac/olei/testbed/KaKaoLoginControl.java \
     android-sources-native/app/src/ac/olei/testbed/KakaoSDKAdapter.java \
-    android-sources-native/app/src/ac/olei/testbed/KakaoSignupActivity.java
+    android-sources-native/app/src/ac/olei/testbed/KakaoSignupActivity.java \
+    android-sources-native/app/res/drawable/splash_background.xml
 
 #ANDROID
 DISTFILES += $$files(android-sources-native/app/*.*)

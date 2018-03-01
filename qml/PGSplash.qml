@@ -3,14 +3,47 @@ import "Resources.js" as R
 
 Rectangle
 {
-    anchors.fill: parent
+    width: parent.width
+    height: parent.height
     visible: true
-    Image
+    color: R.color_bgColor002
+
+    Column
     {
-        anchors.centerIn: parent
-        width: R.dp(184)
-        height: R.dp(349)
-        source: R.image("splash.png")
+        id: ekoreaTextArea
+        width: ekoreaText.contentWidth
+        anchors
+        {
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+        }
+        Rectangle
+        {
+            width: ekoreaText.contentWidth
+            height: ekoreaText.contentHeight
+            color: "transparent"
+
+            CPText
+            {
+                id: ekoreaText
+                font.pointSize: R.pt(50)
+                font.bold: true
+                color: "white"
+                text: "e-koreatech"
+                horizontalAlignment: Text.AlignHCenter
+            }
+        }
+        LYMargin { height: R.dp(60) }
     }
-    Behavior on opacity { NumberAnimation { duration: 1000 ;easing.type: Easing.InQuad}  }
+
+    CPBusyIndicatorEKr
+    {
+        anchors
+        {
+            bottom: ekoreaTextArea.top
+            right: ekoreaTextArea.right
+            rightMargin: R.dp(50)
+            bottomMargin: R.dp(10)
+        }
+    }
 }

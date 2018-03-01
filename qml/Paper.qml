@@ -11,8 +11,8 @@ Rectangle {
     signal evtBack()
     signal evtSearch()
 
-//    width: opt.ds ? R.design_size_width : parent.width
-//    height: opt.ds ? R.design_size_height : parent.height
+    width: opt.ds ? R.design_size_width : parent.width
+    height: opt.ds ? R.design_size_height : parent.height
 
     Rectangle
     {
@@ -78,6 +78,48 @@ Rectangle {
         }
     }
 
+    Rectangle
+    {
+        id: busyArea
+        width: parent.width
+        height: parent.height
+        color: "transparent"
+        //        opacity: 0.7
+        visible: false
+        z: 9999
+
+        Column
+        {
+            width: parent.width
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                leftMargin: parent.width*0.5 - busyIndi.width + R.dp(20)
+            }
+            CPBusyIndicatorEKr
+            {
+                id: busyIndi
+            }
+            LYMargin {
+                height: R.dp(100)
+            }
+        }
+
+        MouseArea
+        {
+            id: ma
+            width: parent.width
+            height: parent.height
+            onClicked: busy(false);
+        }
+    }
+
+    function busy(isBusy)
+    {
+        busyArea.visible = isBusy;
+        busyIndi.running = isBusy;
+    }
+
     property bool doQuit: false
     Timer
     {
@@ -103,8 +145,8 @@ Rectangle {
             return;
         }
 
-        if(stackView.depth > 1)
-            stackView.pop();
+        if(homeStackView.depth > 1)
+            homeStackView.pop();
         else
         {
             if(!doQuit)

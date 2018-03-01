@@ -1,5 +1,5 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
+import QtQuick 2.7
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 import "Resources.js" as R
@@ -11,32 +11,40 @@ ApplicationWindow {
     height: 888
     title: qsTr("Triz 40 Cartoon")
 
-
-
     Component.onCompleted: {
 
         //toast("본 앱에 포함된 카툰의 저작권은 GS인터비전에 있으니 무단 복제를 금합니다.");
-        fadeoutTimer.running = true;
+//        fadeoutTimer.running = true;
         console.log(R.design_size_width)
     }
+//    PGSplash
+//    {
+//        id: splashView
+//    }
+
 
     StackView
     {
-        id: userStackView
+        id: stackView
         anchors.fill: parent
-        visible: !settings.logined
+        visible: true
 
         initialItem: PGLoginDesk
         {
-            width: opt.ds ? R.design_size_width : userStackView.width
-            height: opt.ds ? R.design_size_height : userStackView.height
-
+            width: opt.ds ? R.design_size_width : parent.width
+            height: opt.ds ? R.design_size_height : parent.height
+            onLoginedChanged: {
+                /* When user logined. */
+                if(logined) {
+                    stackView.clear();
+                    stackView.push(Qt.createComponent(R.view_file_home), { });
+                }
+            }
             Component.onCompleted: {
                 /* When Logined... AutoLogin. */
-                console.log("Component.onCompleted : " + settings.logined);
-                if(settings.logined) {
-                    homeStackView.clear();
-                    homeStackView.push(Qt.createComponent(R.view_file_home), { });
+                if(logined) {
+                    stackView.clear();
+                    stackView.push(Qt.createComponent(R.view_file_home), { });
                 }
             }
         }
@@ -44,41 +52,31 @@ ApplicationWindow {
 
     StackView
     {
-        id: homeStackView
-        anchors.fill: parent
-        visible: settings.logined
-    }
-
-    StackView
-    {
         id: popupStack
-        z: 9998
+        z: 99999
     }
 
-    PGSplash
-    {
-        id: splashView
-    }
 
-    Timer
-    {
-        id:fadeoutTimer
-        interval:2000
-        repeat: false
-        onTriggered:{
-            splashView.opacity = 0;
-            hideTimer.start();
-        }
-    }
-    Timer
-    {
-        id:hideTimer
-        interval:800
-        repeat: false
-        onTriggered: {
-            splashView.visible=false;
-        }
-    }
+
+//    Timer
+//    {
+//        id:fadeoutTimer
+//        interval:10
+//        repeat: false
+//        onTriggered:{
+//            splashView.opacity = 0;
+//            hideTimer.start();
+//        }
+//    }
+//    Timer
+//    {
+//        id:hideTimer
+//        interval:800
+//        repeat: false
+//        onTriggered: {
+//            splashView.visible=false;
+//        }
+//    }
 
 
     CPToast

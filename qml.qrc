@@ -26,5 +26,15 @@
         <file>qml/PGTab2.qml</file>
         <file>qml/PGTab3.qml</file>
         <file>qml/PGTab4.qml</file>
+        <file>qml/CPBusyIndicatorStyle.qml</file>
+        <file>qml/CPBusyIndicator.qml</file>
+        <file>qml/CPBusyIndicatorStyleEKr.qml</file>
+        <file>qml/CPBusyIndicatorEKr.qml</file>
+        <file>qml/PGRoomMyClass.qml</file>
+        <file>qml/PGOption.qml</file>
+        <file>qml/PGBoardNotice.qml</file>
+        <file>qml/PGBoardQnA.qml</file>
+        <file>qml/PGBoardData.qml</file>
+        <file>qml/PGVideoPlayer.qml</file>
     </qresource>
 </RCC>

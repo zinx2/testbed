@@ -15,6 +15,7 @@ var color_appTitleText = "#ffffff"
 var color_buttonPressed = "#44000000"
 
 var color_bgColor001 = "#e4e5e9"
+var color_bgColor002 = "#5460e0"
 var color_buttonColor001 = "#5460e0"
 
 var color_orange = "#f6712a"
@@ -59,5 +60,13 @@ var view_file_joinDesk = "PGJoinDesk.qml"
 var view_file_joinEmail = "PGJoinEmail.qml"
 var view_file_loginEmail = "PGLoginEmail.qml"
 var view_file_loginDesk = "PGLoginDesk.qml"
-var view_file_desc = "VWDesc.qml"
+var view_file_myClassRoom = "PGRoomMyClass.qml"
+var view_file_option = "PGOption.qml"
+var view_file_boardNotice = "PGBoardNotice.qml"
+var view_file_boardQnA = "PGBoardQnA.qml"
+var view_file_boardData = "PGBoardData.qml"
+var view_file_videoPlayer = "PGVideoPlayer.qml"
+
+
+
 

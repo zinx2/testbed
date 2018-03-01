@@ -77,8 +77,8 @@ ListView {
                 if(!opt.ds)
                 {
                     md.setCurrentIndex(no);
-                    //                    stackView.push(vwdesc);
-                    stackView.push(Qt.createComponent(R.view_file_desc), { });
+                    //                    homeStackView.push(vwdesc);
+                    homeStackView.push(Qt.createComponent(R.view_file_desc), { });
                 }
 
             }

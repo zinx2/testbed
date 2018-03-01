@@ -5,9 +5,12 @@ import "Resources.js" as R
 Drawer {
     id: drawer
     interactive : true
-    dragMargin : R.dp(20)
+    dragMargin : md.blockedDrawer ? R.dp(0) : R.dp(50)
+    position: md.openedDrawer ? 1.0 : 0.0
+
 
     Rectangle{
+        id: content
         width: parent.width
         height: parent.height
         Column{
@@ -18,132 +21,70 @@ Drawer {
             {
                 sourceWidth: parent.width
                 sourceHeight: R.height_button_middle
-                btnName: "기능1"
+                btnName: "내 강의실"
                 rectColor: R.color_buttonColor001
                 textColor: "white"
                 onClicked:
                 {
-                    /* DESIGN LOGIC */
-                    if(opt.ds)
-                    {
-
-
-
-                        return; /* PLEASE DON'T REMVOE! */
-                    }
-
-                    /* NOT DESIGN LOGIC */
-//                        cmd.withdrawKakao();
+                    navi(R.view_file_myClassRoom);
                 }
             }
             CPButton
             {
                 sourceWidth: parent.width
                 sourceHeight: R.height_button_middle
-                btnName: "기능1"
+                btnName: "공지사항"
                 rectColor: R.color_buttonColor001
                 textColor: "white"
                 onClicked:
                 {
-                    /* DESIGN LOGIC */
-                    if(opt.ds)
-                    {
-
-
-
-                        return; /* PLEASE DON'T REMVOE! */
-                    }
-
-                    /* NOT DESIGN LOGIC */
-//                        cmd.withdrawKakao();
+                    navi(R.view_file_boardNotice);
                 }
             }
             CPButton
             {
                 sourceWidth: parent.width
                 sourceHeight: R.height_button_middle
-                btnName: "기능2"
+                btnName: "질의응답"
                 rectColor: R.color_buttonColor001
                 textColor: "white"
                 onClicked:
                 {
-                    /* DESIGN LOGIC */
-                    if(opt.ds)
-                    {
-
-
-
-                        return; /* PLEASE DON'T REMVOE! */
-                    }
-
-                    /* NOT DESIGN LOGIC */
-//                        cmd.withdrawKakao();
+                    navi(R.view_file_boardQnA);
                 }
-            }            CPButton
+            }
+            CPButton
             {
                 sourceWidth: parent.width
                 sourceHeight: R.height_button_middle
-                btnName: "기능3"
+                btnName: "자료실"
                 rectColor: R.color_buttonColor001
                 textColor: "white"
                 onClicked:
                 {
-                    /* DESIGN LOGIC */
-                    if(opt.ds)
-                    {
-
-
-
-                        return; /* PLEASE DON'T REMVOE! */
-                    }
-
-                    /* NOT DESIGN LOGIC */
-//                        cmd.withdrawKakao();
+                    navi(R.view_file_boardData);
                 }
-            }            CPButton
+            }
+            CPButton
             {
                 sourceWidth: parent.width
                 sourceHeight: R.height_button_middle
-                btnName: "기능4"
+                btnName: "설정"
                 rectColor: R.color_buttonColor001
                 textColor: "white"
                 onClicked:
                 {
-                    /* DESIGN LOGIC */
-                    if(opt.ds)
-                    {
-
-
-
-                        return; /* PLEASE DON'T REMVOE! */
-                    }
-
-                    /* NOT DESIGN LOGIC */
-//                        cmd.withdrawKakao();
-                }
-            }            CPButton
-            {
-                sourceWidth: parent.width
-                sourceHeight: R.height_button_middle
-                btnName: "기능5"
-                rectColor: R.color_buttonColor001
-                textColor: "white"
-                onClicked:
-                {
-                    /* DESIGN LOGIC */
-                    if(opt.ds)
-                    {
-
-
-
-                        return; /* PLEASE DON'T REMVOE! */
-                    }
-
-                    /* NOT DESIGN LOGIC */
-//                        cmd.withdrawKakao();
+                    navi(R.view_file_option);
                 }
             }
         }
+    }
+
+    function navi(filename)
+    {
+        homeStackView.push(Qt.createComponent(filename), {});
+        md.setBlockedDrawer(true);
+        md.setOpenedDrawer(false);
     }
 
 }

@@ -56,7 +56,7 @@ private:
 
 	ImageBinaryLoader* loader;
 	bool doRun = false;
-    const QString DOMAIN_NAME = "http://192.168.35.177:8080/";
+    const QString DOMAIN_NAME = "http://172.18.41.12:8080/";
 };
 
 class AsyncImageProvider : public QQuickAsyncImageProvider

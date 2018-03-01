@@ -174,7 +174,7 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
         context = getApplicationContext();
@@ -559,7 +559,8 @@ public class MainActivity extends org.qtproject.qt5.android.bindings.QtActivity
                                 String result = "";
                                 JSONObject jUserProfile = new JSONObject();
                                 try {
-                                    jUserProfile.put("is_logined", false);
+//                                    jUserProfile.put("is_logined", false);
+                                    jUserProfile.put("is_logined", true);
                                     jUserProfile.put("nickname", object.getString("name"));
                                     jUserProfile.put("email", object.getString("email"));
 

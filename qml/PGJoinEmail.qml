@@ -39,6 +39,6 @@ Paper {
 
     onEvtBack:
     {
-        stackView.pop();
+        userStackView.pop();
     }
 }

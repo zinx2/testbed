@@ -7,103 +7,13 @@ ScrollView
     id: scrollView
     clip: true
 
+    width: R.design_size_width
+    height: R.design_size_height
     Column
     {
         width: scrollView.width
         height: scrollView.height
         spacing: 1
-        CPButton
-        {
-            sourceWidth: parent.width
-            sourceHeight: R.height_button_middle
-            btnName: "카카오 로그아웃"
-            rectColor: R.color_buttonColor001
-            textColor: "white"
-            onClicked:
-            {
-                /* DESIGN LOGIC */
-                if(opt.ds)
-                {
-
-
-
-                    return; /* PLEASE DON'T REMVOE! */
-                }
-
-                /* NOT DESIGN LOGIC */
-                cmd.logoutKakao();
-            }
-        }
-
-        CPButton
-        {
-            sourceWidth: parent.width
-            sourceHeight: R.height_button_middle
-            btnName: "카카오 연결해제"
-            rectColor: R.color_buttonColor001
-            textColor: "white"
-            onClicked:
-            {
-                /* DESIGN LOGIC */
-                if(opt.ds)
-                {
-
-
-
-                    return; /* PLEASE DON'T REMVOE! */
-                }
-
-                /* NOT DESIGN LOGIC */
-                cmd.withdrawKakao();
-            }
-        }
-
-        CPButton
-        {
-            sourceWidth: parent.width
-            sourceHeight: R.height_button_middle
-            btnName: "페이스북 로그아웃"
-            rectColor: R.color_buttonColor001
-            textColor: "white"
-            onClicked:
-            {
-                /* DESIGN LOGIC */
-                if(opt.ds)
-                {
-
-
-
-                    return; /* PLEASE DON'T REMVOE! */
-                }
-
-                /* NOT DESIGN LOGIC */
-                cmd.logoutFacebook();
-            }
-        }
-
-        CPButton
-        {
-            sourceWidth: parent.width
-            sourceHeight: R.height_button_middle
-            btnName: "페이스북 연결해제"
-            rectColor: R.color_buttonColor001
-            textColor: "white"
-            onClicked:
-            {
-                /* DESIGN LOGIC */
-                if(opt.ds)
-                {
-
-
-
-                    return; /* PLEASE DON'T REMVOE! */
-                }
-
-                /* NOT DESIGN LOGIC */
-                cmd.withdrawFacebook();
-            }
-        }
-
         CPImage { source: "image://async/img001.jpg"; height : R.dp(500); width: parent.width}
         CPImage { source: "image://async/img002.jpg"; height : R.dp(500); width: parent.width}
         CPImage { source: "image://async/img003.jpg"; height : R.dp(500); width: parent.width}
@@ -176,79 +86,79 @@ ScrollView
         CPImage { source: "image://async/img070.jpg"; height : R.dp(500); width: parent.width}
         CPImage { source: "image://async/img071.jpg"; height : R.dp(500); width: parent.width}
         CPImage { source: "image://async/img072.jpg"; height : R.dp(500); width: parent.width}
-        CPText
-        {
-            text: md.error
-            font.pointSize: R.pt(22)
-            width: parent.width
-            horizontalAlignment: Text.AlignHCenter
-        }
+        //        CPText
+        //        {
+        //            text: md.error
+        //            font.pointSize: R.pt(22)
+        //            width: parent.width
+        //            horizontalAlignment: Text.AlignHCenter
+        //        }
 
-        CPButton
-        {
-            sourceWidth: parent.width
-            sourceHeight: R.dp(100)
-            width: parent.width
-            height: R.dp(100)
-            type: "text"
-            btnName: "GET ALL DEMO LIST~"
-            rectColor: "orange"
-            textColor: "white"
-            fontSize: R.pt(15)
-            onClicked: {
-                //                nt.title();
-                wk.getDemoAll();
-            }
-        }
+        //        CPButton
+        //        {
+        //            sourceWidth: parent.width
+        //            sourceHeight: R.dp(100)
+        //            width: parent.width
+        //            height: R.dp(100)
+        //            type: "text"
+        //            btnName: "GET ALL DEMO LIST~"
+        //            rectColor: "orange"
+        //            textColor: "white"
+        //            fontSize: R.pt(15)
+        //            onClicked: {
+        //                //                nt.title();
+        //                wk.getDemoAll();
+        //            }
+        //        }
 
 
-        CPButton
-        {
-            sourceWidth: parent.width
-            sourceHeight: R.dp(100)
-            width: parent.width
-            height: R.dp(100)
-            type: "text"
-            btnName: "GET A DEMO."
-            rectColor: "orange"
-            textColor: "white"
-            fontSize: R.pt(15)
-            onClicked:
-            {
-                wk.getDemo(15);
-            }
-        }
+        //        CPButton
+        //        {
+        //            sourceWidth: parent.width
+        //            sourceHeight: R.dp(100)
+        //            width: parent.width
+        //            height: R.dp(100)
+        //            type: "text"
+        //            btnName: "GET A DEMO."
+        //            rectColor: "orange"
+        //            textColor: "white"
+        //            fontSize: R.pt(15)
+        //            onClicked:
+        //            {
+        //                wk.getDemo(15);
+        //            }
+        //        }
 
-        CPButton
-        {
-            sourceWidth: parent.width
-            sourceHeight: R.dp(100)
-            width: parent.width
-            height: R.dp(100)
-            type: "text"
-            btnName: "POST ALL DEMO LIST~"
-            rectColor: "orange"
-            textColor: "white"
-            fontSize: R.pt(15)
-            onClicked: {
-                wk.postDemoAll();
-            }
-        }
+        //        CPButton
+        //        {
+        //            sourceWidth: parent.width
+        //            sourceHeight: R.dp(100)
+        //            width: parent.width
+        //            height: R.dp(100)
+        //            type: "text"
+        //            btnName: "POST ALL DEMO LIST~"
+        //            rectColor: "orange"
+        //            textColor: "white"
+        //            fontSize: R.pt(15)
+        //            onClicked: {
+        //                wk.postDemoAll();
+        //            }
+        //        }
 
-        CPButton
-        {
-            sourceWidth: parent.width
-            sourceHeight: R.dp(100)
-            width: parent.width
-            height: R.dp(100)
-            type: "text"
-            btnName: "POST A DEMO ~"
-            rectColor: "orange"
-            textColor: "white"
-            fontSize: R.pt(15)
-            onClicked: {
-                wk.postDemo(11);
-            }
-        }
+        //        CPButton
+        //        {
+        //            sourceWidth: parent.width
+        //            sourceHeight: R.dp(100)
+        //            width: parent.width
+        //            height: R.dp(100)
+        //            type: "text"
+        //            btnName: "POST A DEMO ~"
+        //            rectColor: "orange"
+        //            textColor: "white"
+        //            fontSize: R.pt(15)
+        //            onClicked: {
+        //                wk.postDemo(11);
+        //            }
+        //        }
     }
 }

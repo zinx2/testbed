@@ -5,7 +5,7 @@
 class Settings : public QObject
 {
     Q_OBJECT
-        Q_PROPERTY(bool logined READ logined WRITE setLogined NOTIFY loginedChanged)
+        Q_PROPERTY(bool logined READ logined WRITE setLogined NOTIFY loginedChanged)     
         Q_PROPERTY(int snsType READ snsType WRITE setSnsType NOTIFY snsTypeChanged)
         Q_PROPERTY(QString nickName READ nickName WRITE setNickName NOTIFY nickNameChanged)
         Q_PROPERTY(QString email READ email WRITE setEmail NOTIFY emailChanged)
@@ -20,7 +20,7 @@ public:
         return m_instance;
     }
 
-    Q_INVOKABLE bool    logined()        const { return valueBool("is_logined"); }
+    Q_INVOKABLE bool    logined()        const { return valueBool("is_logined"); }   
     Q_INVOKABLE int     snsType()        const { return valueInt("sns_type"); }
     Q_INVOKABLE QString nickName()       const { return valueStr("nickname"); }
     Q_INVOKABLE QString email()          const { return valueStr("email"); }
@@ -37,7 +37,7 @@ public slots:
     QString valueStr(QString key)  const { return m_setting.value(key).toString(); }
     bool    valueBool(QString key) const { return m_setting.value(key).toBool(); }
 
-    void setLogined(const bool &m) { setValue("is_logined", m); emit loginedChanged(); }
+    void setLogined(const bool &m) { setValue("is_logined", m); emit loginedChanged(); }    
     void setSnsType(const int &m) { setValue("sns_type", m); emit snsTypeChanged(); }
     void setNickName(const QString &m) { setValue("nickname", m); emit nickNameChanged(); }
     void setEmail(const QString &m) { setValue("email", m); emit emailChanged(); }
