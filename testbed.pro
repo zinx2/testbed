@@ -62,7 +62,10 @@ ios {
 
     #KAKAOTALK
     LIBS += -F$$PWD/ios-libraries/KakaoSDK \
-            -framework KakaoOpenSDK
+            -framework KakaoOpenSDK \
+            -framework KakaoLink \
+            -framework KakaoMessageTemplate \
+            -framework KakaoCommon
 
     #FACEBOOK
     LIBS += -F$$PWD/ios-libraries/FacebookSDK \
@@ -87,8 +90,7 @@ DISTFILES += \
     img/splash.jpg \
     android-sources-native/app/src/ac/olei/testbed/KaKaoLoginControl.java \
     android-sources-native/app/src/ac/olei/testbed/KakaoSDKAdapter.java \
-    android-sources-native/app/src/ac/olei/testbed/KakaoSignupActivity.java \
-    android-sources-native/app/res/drawable/splash_background.xml
+    android-sources-native/app/src/ac/olei/testbed/KakaoSignupActivity.java
 
 #ANDROID
 DISTFILES += $$files(android-sources-native/app/*.*)

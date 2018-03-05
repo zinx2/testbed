@@ -5,6 +5,8 @@
 #import "UserNotifications/UserNotifications.h"     /* -> 'UserNotifications.framework' */
 #import "AudioToolBox/AudioToolBox.h"               /* -> 'AudioToolbox.framework' */
 #import "KakaoOpenSDK/KakaoOpenSDK.h"
+#import "KakaoLink/KakaoLink.h"
+#import "KakaoMessageTemplate/KakaoMessageTemplate.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 /*********************************************/
@@ -115,7 +117,7 @@
 
 @implementation QIOSApplicationDelegate (AppDelegate)
 
-QString NativeApp::getDeviceId() const
+QString NativeApp::getDeviceId()
 {
     return "123456789101110";
 }
@@ -176,6 +178,64 @@ void NativeApp::logoutKakao()
     }];
 }
 
+void NativeApp::inviteKakao(QString senderId, QString image, QString title, QString desc, QString link)
+{
+    // Feed 타입 템플릿 오브젝트 생성
+    KMTTemplate *template1 = [KMTFeedTemplate feedTemplateWithBuilderBlock:^(KMTFeedTemplateBuilder * _Nonnull feedTemplateBuilder) {
+        
+        // 컨텐츠
+        feedTemplateBuilder.content = [KMTContentObject contentObjectWithBuilderBlock:^(KMTContentBuilder * _Nonnull contentBuilder) {
+            contentBuilder.title = @"딸기 치즈 케익";
+            contentBuilder.desc = @"#케익 #딸기 #삼평동 #까페 #분위기 #소개팅";
+            contentBuilder.imageURL = [NSURL URLWithString:@"http://mud-kage.kakao.co.kr/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png"];
+            contentBuilder.link = [KMTLinkObject linkObjectWithBuilderBlock:^(KMTLinkBuilder * _Nonnull linkBuilder) {
+                linkBuilder.mobileWebURL = [NSURL URLWithString:@"https://developers.kakao.com"];
+            }];
+        }];
+        
+        // 소셜
+        feedTemplateBuilder.social = [KMTSocialObject socialObjectWithBuilderBlock:^(KMTSocialBuilder * _Nonnull socialBuilder) {
+            socialBuilder.likeCount = @(286);
+            socialBuilder.commnentCount = @(45);
+            socialBuilder.sharedCount = @(845);
+        }];
+        
+        // 버튼
+        [feedTemplateBuilder addButton:[KMTButtonObject buttonObjectWithBuilderBlock:^(KMTButtonBuilder * _Nonnull buttonBuilder) {
+            buttonBuilder.title = @"웹으로 보기";
+            buttonBuilder.link = [KMTLinkObject linkObjectWithBuilderBlock:^(KMTLinkBuilder * _Nonnull linkBuilder) {
+                linkBuilder.mobileWebURL = [NSURL URLWithString:@"https://developers.kakao.com"];
+            }];
+        }]];
+        [feedTemplateBuilder addButton:[KMTButtonObject buttonObjectWithBuilderBlock:^(KMTButtonBuilder * _Nonnull buttonBuilder) {
+            buttonBuilder.title = @"앱으로 보기";
+            buttonBuilder.link = [KMTLinkObject linkObjectWithBuilderBlock:^(KMTLinkBuilder * _Nonnull linkBuilder) {
+                linkBuilder.iosExecutionParams = @"param1=value1&param2=value2";
+                linkBuilder.androidExecutionParams = @"param1=value1&param2=value2";
+            }];
+        }]];
+    }];
+    NSLog(@"%@", template1);
+    
+    // 카카오링크 실행
+//    [self.view startLoading];
+    [[KLKTalkLinkCenter sharedCenter] sendDefaultWithTemplate:template1 success:^(NSDictionary<NSString *,NSString *> * _Nullable warningMsg, NSDictionary<NSString *,NSString *> * _Nullable argumentMsg) {
+        
+        // 성공
+//        [self.view stopLoading];
+        NSLog(@"warning message: %@", warningMsg);
+        NSLog(@"argument message: %@", argumentMsg);
+        
+    } failure:^(NSError * _Nonnull error) {
+        
+        // 실패
+//        [self.view stopLoading];
+//        [self alertWithMessage:error.description];
+        NSLog(@"error: %@", error);
+        
+    }];
+}
+
 void NativeApp::loginFacebook()
 {
     SDKTask *sdk = [SDKTask alloc];
@@ -210,8 +270,6 @@ void NativeApp::loginFacebook()
      }];
 }
 
-
-
 void NativeApp::logoutFacebook()
 {
     FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
@@ -236,6 +294,11 @@ void NativeApp::withdrawFacebook()
      }];
     
 
+}
+
+void NativeApp::inviteFacebook(QString senderId, QString image, QString title, QString desc, QString link)
+{
+    
 }
 
 - (BOOL)application:(UIApplication *)application
