@@ -9,6 +9,7 @@
 #import "KakaoMessageTemplate/KakaoMessageTemplate.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 /*********************************************/
 
 #include <QtCore>
@@ -298,7 +299,12 @@ void NativeApp::withdrawFacebook()
 
 void NativeApp::inviteFacebook(QString senderId, QString image, QString title, QString desc, QString link)
 {
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = [NSURL URLWithString:@"http://developers.facebook.com"];
+    content.quote = @"qwdqwdqwdwq";
     
+    UIViewController *qCtrl = [[[UIApplication sharedApplication] keyWindow]rootViewController];
+    [FBSDKShareDialog showFromViewController:qCtrl withContent:content delegate:nil];
 }
 
 - (BOOL)application:(UIApplication *)application

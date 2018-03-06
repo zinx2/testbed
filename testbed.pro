@@ -71,6 +71,7 @@ ios {
     LIBS += -F$$PWD/ios-libraries/FacebookSDK \
             -framework FBSDKCoreKit \
             -framework FBSDKLoginKit \
+            -framework FBSDKShareKit \
             -framework Bolts
 
 }
